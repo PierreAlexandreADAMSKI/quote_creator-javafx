@@ -1,36 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0"
-            prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1"
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="app.view.main.MainController">
     <children>
         <FlowPane prefHeight="800.0" prefWidth="1280.0">
             <children>
                 <ToolBar prefHeight="40.0" prefWidth="1280.0">
                     <items>
-                        <MenuButton mnemonicParsing="false" text="New">
-                            <items>
-                                <MenuItem mnemonicParsing="false" text="Action 1"/>
-                                <MenuItem mnemonicParsing="false" text="Action 2"/>
-                            </items>
-                        </MenuButton>
+                        <MenuButton fx:id="newMenu" mnemonicParsing="false" text="nouveau"/>
                         <Button layoutX="10.0" layoutY="11.0" mnemonicParsing="false" text="Load"/>
                         <Button layoutX="59.0" layoutY="11.0" mnemonicParsing="false" text="save"/>
-                        <Button mnemonicParsing="false" text="Add" translateX="999.0" onAction="#onAddSel"/>
-                        <Button layoutX="179.0" layoutY="11.0" mnemonicParsing="false" text="Del" translateX="1002.0"/>
+                        <Button fx:id="addButton" mnemonicParsing="false" onAction="#onAddSel" text="Add"
+                                translateX="990.0"/>
+                        <Button fx:id="delButton" layoutX="179.0" layoutY="11.0" mnemonicParsing="false" text="Del"
+                                translateX="990.0"/>
                     </items>
                 </ToolBar>
-                <AnchorPane prefHeight="760.0" prefWidth="400.0"/>
-                <ScrollPane prefHeight="760.0" prefWidth="880.0" hbarPolicy="ALWAYS" vbarPolicy="ALWAYS" >
+                <AnchorPane prefHeight="720.0" prefWidth="400.0">
+                    <children>
+                        <ScrollPane fx:id="formScrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER"
+                                    prefHeight="300.0" prefWidth="400.0" vbarPolicy="ALWAYS"/>
+                        <TreeView layoutY="300.0" prefHeight="420.0" prefWidth="400.0"/>
+                    </children>
+                </AnchorPane>
+                <ScrollPane fx:id="tableScrollPane" hbarPolicy="AS_NEEDED" prefHeight="600.0" prefWidth="880.0"
+                            vbarPolicy="ALWAYS">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="760.0" prefWidth="880.0">
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="700.0" prefWidth="862.0">
                             <children>
-                                <TableView fx:id="table" prefHeight="760.0" prefWidth="880.0"/>
+                                <TableView fx:id="table" prefHeight="700.0" prefWidth="862.0"/>
                             </children>
                         </AnchorPane>
                     </content>

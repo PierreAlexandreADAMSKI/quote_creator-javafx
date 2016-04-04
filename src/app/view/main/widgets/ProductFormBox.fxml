@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<?import javafx.geometry.Insets?>
+<fx:root type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <VBox fx:id="productFormBox" prefHeight="300.0" prefWidth="400.0">
+            <children>
+                <HBox prefWidth="400.0">
+                    <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0"
+                              text="Produit :"/>
+                        <TextField fx:id="productTextField" id="product"/>
+                    </children>
+                </HBox>
+                <HBox layoutX="10.0" layoutY="10.0" prefWidth="400.0">
+                    <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0"
+                              text="Revendeur :"/>
+                        <TextField fx:id="sellerTextField" id="seller"/>
+                    </children>
+                </HBox>
+                <HBox layoutX="10.0" layoutY="36.0" prefWidth="400.0">
+                    <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0"
+                              text="Taille en m2 :"/>
+                        <TextField fx:id="sizeTextField" id="size"/>
+                    </children>
+                </HBox>
+                <HBox layoutX="10.0" layoutY="62.0" prefWidth="400.0">
+                    <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0"
+                              text="Prix HT en € :"/>
+                        <TextField fx:id="priceWriteTextField" id="priceWrite"/>
+                    </children>
+                </HBox>
+                <HBox layoutX="10.0" layoutY="88.0" prefWidth="400.0">
+                    <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0"
+                              text="TVA en % :"/>
+                        <TextField fx:id="tvaTextField" id="tva"/>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</fx:root>

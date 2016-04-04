@@ -14,13 +14,23 @@ public class RowAdapter {
 	private ObjectProperty<Number> tva;
 	private ObjectProperty<Number> priceGen;
 
+	public RowAdapter(){
+		setProduct(null);
+		setSeller(null);
+		setSizeSquare(null);
+		setTva(null);
+		setPriceWrite(null);
+		setPriceGen(null);
+		setSel(true);
+	}
+
 	public RowAdapter(String product, String seller, Number sizeSquare, Number tva, Number priceWrite) {
 		setProduct(product);
 		setSeller(seller);
 		setSizeSquare(sizeSquare);
 		setTva(tva);
 		setPriceWrite(priceWrite);
-		setPriceGen(priceWrite.floatValue() - (priceWrite.floatValue() * tva.floatValue() / 100.f));
+		setPriceGen(priceWrite.floatValue() + (priceWrite.floatValue() * tva.floatValue() / 100.f));
 		setSel(true);
 	}
 
