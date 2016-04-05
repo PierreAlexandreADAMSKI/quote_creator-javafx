@@ -17,17 +17,17 @@
                         <MenuButton fx:id="newMenu" mnemonicParsing="false" text="nouveau"/>
                         <Button layoutX="10.0" layoutY="11.0" mnemonicParsing="false" text="Load"/>
                         <Button layoutX="59.0" layoutY="11.0" mnemonicParsing="false" text="save"/>
-                        <Button fx:id="addButton" mnemonicParsing="false" onAction="#onAddSel" text="Add"
+                        <Button fx:id="addButton" mnemonicParsing="false" onAction="#onAddButtonAction" text="Add"
                                 translateX="990.0"/>
                         <Button fx:id="delButton" layoutX="179.0" layoutY="11.0" mnemonicParsing="false" text="Del"
-                                translateX="990.0"/>
+                                translateX="990.0" onAction="#onDelButtonAction"/>
                     </items>
                 </ToolBar>
                 <AnchorPane prefHeight="720.0" prefWidth="400.0">
                     <children>
                         <ScrollPane fx:id="formScrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER"
                                     prefHeight="300.0" prefWidth="400.0" vbarPolicy="ALWAYS"/>
-                        <TreeView layoutY="300.0" prefHeight="420.0" prefWidth="400.0"/>
+                        <TreeView fx:id="treeView" layoutY="300.0" prefHeight="420.0" prefWidth="400.0"/>
                     </children>
                 </AnchorPane>
                 <ScrollPane fx:id="tableScrollPane" hbarPolicy="AS_NEEDED" prefHeight="600.0" prefWidth="880.0"

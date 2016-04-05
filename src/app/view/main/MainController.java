@@ -2,7 +2,12 @@ package app.view.main;
 
 import app.view.main.widgets.ProductFormBox;
 import app.view.main.adapters.RowAdapter;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -15,19 +20,21 @@ import javafx.scene.layout.AnchorPane;
  */
 public class MainController {
 	@FXML
-	private ScrollPane formScrollPane;
+	public ScrollPane formScrollPane;
 	@FXML
-	private Button addButton;
+	public Button addButton;
 	@FXML
-	private Button delButton;
+	public Button delButton;
 	@FXML
-	private AnchorPane rowSetup;
+	public AnchorPane rowSetup;
 	@FXML
-	private MenuButton newMenu;
+	public MenuButton newMenu;
 	@FXML
-	private ScrollPane tableScrollPane;
+	public ScrollPane tableScrollPane;
 	@FXML
-	private TableView<RowAdapter> table;
+	public TableView<RowAdapter> table;
+	@FXML
+	public TreeView<String> treeView;
 
 	private TableColumn<RowAdapter, Boolean> selCol = new TableColumn<>("");
 	private TableColumn<RowAdapter, String> productWriteCol = new TableColumn<>("Produit");
@@ -39,25 +46,59 @@ public class MainController {
 
 	private MenuItem row = new MenuItem("ligne");
 
-	private RowAdapter adapter = new RowAdapter();
+	public RowAdapter rowAdapter = new RowAdapter();
 
 
 	@FXML
 	private void initialize() {
 		addButton.setDisable(true);
-		delButton.setDisable(true);
 		row.setOnAction(event -> {
 			final ProductFormBox productFormBox = new ProductFormBox();
 			formScrollPane.setContent(productFormBox);
-			//productFormBox.initForm(adapter);
+			productFormBox.initForm(this);
 		});
 		newMenu.getItems().setAll(row);
 
 		initTable();
+
+		treeView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+			if (!treeView.getRoot().equals(newValue)) {
+				table.getSelectionModel().select(treeView.getTreeItemLevel(newValue) - 1);
+			}
+		});
 	}
 
-	private void initTable(){
-		table.setItems(FXCollections.observableArrayList(new RowAdapter("aa", "bb", 20.2, 100, 20)));
+	private boolean ignoreControlRelease = false;
+
+	private void initTable() {
+		delButton.disableProperty().bind(
+				Bindings.not(Bindings.size(table.getItems()).greaterThan(0)));
+
+		table.setOnKeyReleased(event -> {
+			if (!table.getItems().isEmpty() && event.getCode().equals(KeyCode.DELETE)) {
+				table.getItems().remove(table.getSelectionModel().getSelectedIndex());
+			}
+
+			if (event.isControlDown()) {
+				ignoreControlRelease = true;
+				switch (event.getCode()) {
+					case N:
+						final ProductFormBox productFormBox = new ProductFormBox();
+						formScrollPane.setContent(productFormBox);
+						productFormBox.initForm(this);
+						break;
+					case D:
+						final RowAdapter temp = table.getSelectionModel().getSelectedItem();
+						final int treeIndex = table.getSelectionModel().getSelectedIndex() + 1;
+						table.getItems().add(temp);
+						treeView.getRoot().getChildren().add(treeIndex, new TreeItem<>(temp.getName()));
+				}
+			} else {
+				ignoreControlRelease = false;
+			}
+
+		});
+
 		productWriteCol.setCellValueFactory(new PropertyValueFactory<>("product"));
 		productWriteCol.setOnEditCommit(edit -> table.getItems().get(edit.getTablePosition().getRow()).setProduct(edit.getNewValue()));
 		sellerSelCol.setCellValueFactory(new PropertyValueFactory<>("seller"));
@@ -86,6 +127,15 @@ public class MainController {
 		for (TableColumn column : table.getColumns()) {
 			column.setSortable(false);
 		}
+	}
+
+	@FXML
+	public void onDelButtonAction() {
+		table.getItems().remove(table.getSelectionModel().getSelectedIndex());
+	}
+
+	private class TreeViewCell extends TreeCell<String> {
+
 	}
 
 	/**
@@ -124,10 +174,19 @@ public class MainController {
 				setGraphic(null);
 			}
 		}
+
 	}
 
 	@FXML
-	public void onAddSel() {
+	public void onAddButtonAction() {
+		formScrollPane.setContent(null);
+		table.getItems().add(rowAdapter);
+		if (treeView.getRoot() == null) {
+			treeView.setRoot(new TreeItem<>("nom du projet"));
+		}
+		treeView.getRoot().getChildren().add(new TreeItem<>(rowAdapter.getName()));
+		rowAdapter = new RowAdapter();
+		addButton.setDisable(true);
 	}
 
 	/**

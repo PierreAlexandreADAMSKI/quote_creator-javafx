@@ -1,6 +1,7 @@
 package app.view.main.widgets;
 
 import app.App;
+import app.view.main.MainController;
 import app.view.main.adapters.RowAdapter;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,6 +9,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -20,17 +22,19 @@ import java.util.regex.Pattern;
  */
 public class ProductFormBox extends VBox {
 	@FXML
-	private VBox productFormBox;
+	public TextField nameTextField;
 	@FXML
-	private TextField productTextField;
+	public VBox productFormBox;
 	@FXML
-	private TextField sellerTextField;
+	public TextField productTextField;
 	@FXML
-	private TextField sizeTextField;
+	public TextField sellerTextField;
 	@FXML
-	private TextField priceWriteTextField;
+	public TextField sizeTextField;
 	@FXML
-	private TextField tvaTextField;
+	public TextField priceWriteTextField;
+	@FXML
+	public TextField tvaTextField;
 
 	public ProductFormBox() {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("ProductFormBox.fxml"));
@@ -41,6 +45,9 @@ public class ProductFormBox extends VBox {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void initForm(MainController controller) {
 		this.setPadding(new Insets(10));
 		((VBox) this.getChildren().get(0)).setSpacing(10);
 		((VBox) this.getChildren().get(0)).getChildren().forEach(node -> {
@@ -48,38 +55,50 @@ public class ProductFormBox extends VBox {
 					text instanceof Text).forEach(text -> text.setTranslateX(-5));
 			((HBox) node).setAlignment(Pos.CENTER_RIGHT);
 		});
-	}
 
-	public void initForm(RowAdapter adapter) {
+		this.setOnMouseMoved(event -> {
+			if (((VBox) this.getChildren().get(0)).getChildren().stream().filter(textField ->
+					textField instanceof TextField).allMatch(predicate ->
+					!((TextField) predicate).getText().isEmpty() && !((TextField) predicate).getText().equals(""))) {
+				controller.addButton.setDisable(false);
+			}
+		});
+
 		final Pattern wholeNumberPattern = Pattern.compile("[0-9]*[.]?[0-9]*");
-		productTextField.setOnKeyTyped(keyTyped -> adapter.setProduct(productTextField.getText()));
-		sellerTextField.setOnKeyTyped(keyTyped -> adapter.setProduct(sellerTextField.getText()));
+		nameTextField.setOnKeyReleased(keyTyped -> controller.rowAdapter.setName(nameTextField.getText()));
+		productTextField.setOnKeyReleased(keyTyped -> controller.rowAdapter.setProduct(productTextField.getText()));
+		sellerTextField.setOnKeyReleased(keyTyped -> controller.rowAdapter.setSeller(sellerTextField.getText()));
 
-		sizeTextField.setOnKeyTyped(keyTyped -> adapter.setProduct(sizeTextField.getText()));
+		sizeTextField.setOnKeyReleased(keyTyped -> {
+			if (!sizeTextField.getText().isEmpty() && !sizeTextField.getText().equals(""))
+				controller.rowAdapter.setSizeSquare(Float.valueOf(sizeTextField.getText()));
+		});
 		sizeTextField.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (!wholeNumberPattern.matcher(newValue).matches())
 				sizeTextField.setText(oldValue);
 		});
-		priceWriteTextField.setOnKeyTyped(keyTyped -> {
-			adapter.setProduct(priceWriteTextField.getText());
-			if (!tvaTextField.getText().isEmpty()
-					&& !tvaTextField.getText().equals("")
-					&& !priceWriteTextField.getText().equals("")) {
-				adapter.setPriceGen(Float.valueOf(priceWriteTextField.getText()) +
-						(Float.valueOf(priceWriteTextField.getText()) * Float.valueOf(tvaTextField.getText()) / 100.f));
+		priceWriteTextField.setOnKeyReleased(keyTyped -> {
+			if (!priceWriteTextField.getText().isEmpty() && !priceWriteTextField.getText().equals("")) {
+				controller.rowAdapter.setPriceWrite(Float.valueOf(priceWriteTextField.getText()));
+				if (!tvaTextField.getText().isEmpty()
+						&& !tvaTextField.getText().equals("")) {
+					controller.rowAdapter.setPriceGen(Float.valueOf(priceWriteTextField.getText()) +
+							(Float.valueOf(priceWriteTextField.getText()) * Float.valueOf(tvaTextField.getText()) / 100.f));
+				}
 			}
 		});
 		priceWriteTextField.textProperty().addListener((observable, oldValue, newValue) -> {
 			if (!wholeNumberPattern.matcher(newValue).matches())
 				priceWriteTextField.setText(oldValue);
 		});
-		tvaTextField.setOnKeyTyped(keyTyped -> {
-			adapter.setProduct(tvaTextField.getText());
-			if (!priceWriteTextField.getText().isEmpty()
-					&& !priceWriteTextField.getText().equals("")
-					&& !tvaTextField.getText().equals("")) {
-				adapter.setPriceGen(Float.valueOf(priceWriteTextField.getText()) +
-						(Float.valueOf(priceWriteTextField.getText()) * Float.valueOf(tvaTextField.getText()) / 100.f));
+		tvaTextField.setOnKeyReleased(keyTyped -> {
+			if (!tvaTextField.getText().isEmpty() && !tvaTextField.getText().equals("")) {
+				controller.rowAdapter.setTva(Float.valueOf(tvaTextField.getText()));
+				if (!priceWriteTextField.getText().isEmpty()
+						&& !priceWriteTextField.getText().equals("")) {
+					controller.rowAdapter.setPriceGen(Float.valueOf(priceWriteTextField.getText()) +
+							(Float.valueOf(priceWriteTextField.getText()) * Float.valueOf(tvaTextField.getText()) / 100.f));
+				}
 			}
 		});
 		tvaTextField.textProperty().addListener((observable, oldValue, newValue) -> {
