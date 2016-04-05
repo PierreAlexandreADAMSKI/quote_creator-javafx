@@ -3,16 +3,10 @@ package app.view.main;
 import app.view.main.widgets.ProductFormBox;
 import app.view.main.adapters.RowAdapter;
 import javafx.beans.binding.Bindings;
-import javafx.beans.binding.BooleanBinding;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -60,27 +54,14 @@ public class MainController {
 		newMenu.getItems().setAll(row);
 
 		initTable();
-
-		treeView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-			if (!treeView.getRoot().equals(newValue)) {
-				table.getSelectionModel().select(treeView.getTreeItemLevel(newValue) - 1);
-			}
-		});
 	}
-
-	private boolean ignoreControlRelease = false;
 
 	private void initTable() {
 		delButton.disableProperty().bind(
 				Bindings.not(Bindings.size(table.getItems()).greaterThan(0)));
 
 		table.setOnKeyReleased(event -> {
-			if (!table.getItems().isEmpty() && event.getCode().equals(KeyCode.DELETE)) {
-				table.getItems().remove(table.getSelectionModel().getSelectedIndex());
-			}
-
 			if (event.isControlDown()) {
-				ignoreControlRelease = true;
 				switch (event.getCode()) {
 					case N:
 						final ProductFormBox productFormBox = new ProductFormBox();
@@ -88,13 +69,20 @@ public class MainController {
 						productFormBox.initForm(this);
 						break;
 					case D:
-						final RowAdapter temp = table.getSelectionModel().getSelectedItem();
-						final int treeIndex = table.getSelectionModel().getSelectedIndex() + 1;
-						table.getItems().add(temp);
-						treeView.getRoot().getChildren().add(treeIndex, new TreeItem<>(temp.getName()));
+						if (!table.getItems().isEmpty()) {
+							final RowAdapter temp = table.getSelectionModel().getSelectedItem();
+							final int treeIndex = table.getSelectionModel().getSelectedIndex();
+							table.getItems().add(temp);
+							treeView.getRoot().getChildren().add(treeIndex, new TreeItem<>(temp.getName()));
+						}
+						break;
 				}
 			} else {
-				ignoreControlRelease = false;
+				switch (event.getCode()) {
+					case BACK_SPACE:
+						onDelButtonAction();
+						break;
+				}
 			}
 
 		});
@@ -131,7 +119,11 @@ public class MainController {
 
 	@FXML
 	public void onDelButtonAction() {
-		table.getItems().remove(table.getSelectionModel().getSelectedIndex());
+		if (!table.getItems().isEmpty()) {
+			final int index = table.getSelectionModel().getSelectedIndex();
+			table.getItems().remove(index);
+			treeView.getRoot().getChildren().remove(index);
+		}
 	}
 
 	private class TreeViewCell extends TreeCell<String> {
@@ -146,16 +138,8 @@ public class MainController {
 
 		public CheckBoxCell() {
 			/* checkbox action on mouse click event */
+			checkBox.selectedProperty().bind(rowAdapter.selProperty());
 			checkBox.setAlignment(Pos.CENTER);
-			checkBox.setOnAction(check -> table.getItems().get(getTableRow().getIndex()).setSel(checkBox.isSelected()));
-			if (this.isSelected()) {
-				/* action when pressing "clear" key for the selected cell*/
-				this.setOnKeyPressed(key -> {
-					if (key.getCode().equals(KeyCode.CLEAR)) {
-						table.getItems().remove(getTableRow().getIndex());
-					}
-				});
-			}
 			setPrefSize(checkBox.getPrefWidth(), checkBox.getPrefHeight());
 			setGraphic(checkBox);
 			setPrefWidth(30);
@@ -169,6 +153,7 @@ public class MainController {
 			super.updateItem(item, empty);
 			setText(null);
 			if (!empty) {
+				setGraphic(checkBox);
 				setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
 			} else {
 				setGraphic(null);
@@ -180,11 +165,13 @@ public class MainController {
 	@FXML
 	public void onAddButtonAction() {
 		formScrollPane.setContent(null);
-		table.getItems().add(rowAdapter);
+		rowAdapter.setSel(true);
+		table.getItems().add(0, rowAdapter);
 		if (treeView.getRoot() == null) {
+			//TODO get the project name -> create a project system
 			treeView.setRoot(new TreeItem<>("nom du projet"));
 		}
-		treeView.getRoot().getChildren().add(new TreeItem<>(rowAdapter.getName()));
+		treeView.getRoot().getChildren().add(0, new TreeItem<>(rowAdapter.getName()));
 		rowAdapter = new RowAdapter();
 		addButton.setDisable(true);
 	}
