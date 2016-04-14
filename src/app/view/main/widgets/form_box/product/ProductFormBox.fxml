@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+
+<fx:root type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <VBox prefHeight="300.0" prefWidth="400.0">
+            <children>
+            <HBox layoutX="10.0" layoutY="10.0" prefWidth="400.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Étiquette :" underline="true" />
+                  <TextField id="product" fx:id="nameTextField" alignment="CENTER_RIGHT" promptText="nom du fichier"/>
+               </children>
+            </HBox>
+                <HBox prefWidth="400.0">
+                    <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Produit :" />
+                        <TextField id="product" fx:id="productTextField" />
+                    </children>
+                </HBox>
+                <HBox layoutX="10.0" layoutY="10.0" prefWidth="400.0">
+                    <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Revendeur :" />
+                        <TextField id="seller" fx:id="sellerTextField" />
+                    </children>
+                </HBox>
+                <HBox layoutX="10.0" layoutY="36.0" prefWidth="400.0">
+                    <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Taille en m2 :" />
+                        <TextField id="size" fx:id="sizeTextField" />
+                    </children>
+                </HBox>
+                <HBox layoutX="10.0" layoutY="62.0" prefWidth="400.0">
+                    <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Prix HT en € :" />
+                        <TextField id="priceWrite" fx:id="priceWriteTextField" />
+                    </children>
+                </HBox>
+                <HBox layoutX="10.0" layoutY="88.0" prefWidth="400.0">
+                    <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="TVA en % :" />
+                        <TextField id="tva" fx:id="tvaTextField" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</fx:root>

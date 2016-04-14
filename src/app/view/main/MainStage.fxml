@@ -6,6 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import app.view.main.widgets.table_box.TableViewBox?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
             xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="app.view.main.MainController">
@@ -23,23 +24,26 @@
                                 translateX="990.0" onAction="#onDelButtonAction"/>
                     </items>
                 </ToolBar>
-                <AnchorPane prefHeight="720.0" prefWidth="400.0">
+                <VBox prefHeight="720.0" prefWidth="400.0">
                     <children>
-                        <ScrollPane fx:id="formScrollPane" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER"
-                                    prefHeight="300.0" prefWidth="400.0" vbarPolicy="ALWAYS"/>
-                        <TreeView fx:id="treeView" layoutY="300.0" prefHeight="420.0" prefWidth="400.0"/>
-                    </children>
-                </AnchorPane>
-                <ScrollPane fx:id="tableScrollPane" hbarPolicy="AS_NEEDED" prefHeight="600.0" prefWidth="880.0"
-                            vbarPolicy="ALWAYS">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="700.0" prefWidth="862.0">
+                        <HBox>
                             <children>
-                                <TableView fx:id="table" prefHeight="700.0" prefWidth="862.0"/>
+                                <ScrollPane fx:id="formScrollPane" prefHeight="300.0" prefWidth="400.0"
+                                            fitToWidth="true"
+                                            hbarPolicy="NEVER"
+                                            vbarPolicy="ALWAYS">
+                                </ScrollPane>
                             </children>
-                        </AnchorPane>
-                    </content>
-                </ScrollPane>
+                        </HBox>
+                        <HBox layoutY="300.0">
+                            <children>
+                                <TreeView fx:id="treeView" layoutY="300.0" prefHeight="420.0" prefWidth="400.0"/>
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+                <ScrollPane fx:id="tableScrollPane" hbarPolicy="AS_NEEDED" prefHeight="600.0" prefWidth="880.0"
+                            vbarPolicy="ALWAYS"/>
             </children>
         </FlowPane>
     </children>

@@ -4,7 +4,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 import app.service.AppUtil;
-import app.view.StageService;
+import app.service.StageService;
 
 /**
  * java Created by Pierre-Alexandre Adamski on 27/03/2016.

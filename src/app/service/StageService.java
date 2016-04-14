@@ -1,4 +1,4 @@
-package app.view;
+package app.service;
 
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;

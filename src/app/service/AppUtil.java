@@ -1,6 +1,6 @@
 package app.service;
 
-import app.view.StageService;
+import app.App;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -20,6 +20,7 @@ public class AppUtil {
 			final FXMLLoader loader = new FXMLLoader(url);
 			final AnchorPane anchorPane = loader.load();
 			final Scene scene = new Scene(anchorPane);
+			scene.getStylesheets().add(App.class.getResource("style.css").toExternalForm());
 			StageService.getInstance().getPrimaryStage().setScene(scene);
 			StageService.getInstance().getPrimaryStage().show();
 		} catch (IOException e) {

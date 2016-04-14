@@ -15,6 +15,7 @@ public class RowAdapter {
 	private ObjectProperty<Number> tva;
 	private ObjectProperty<Number> priceGen;
 
+
 	public RowAdapter() {
 		setName("untitled");
 		setProduct(null);

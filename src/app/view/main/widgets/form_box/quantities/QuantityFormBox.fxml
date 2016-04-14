@@ -10,12 +10,12 @@
     <children>
         <VBox fx:id="productFormBox" prefHeight="300.0" prefWidth="400.0">
             <children>
-            <HBox layoutX="10.0" layoutY="10.0" prefWidth="400.0">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Étiquette :" underline="true" />
-                  <TextField id="product" fx:id="nameTextField" alignment="CENTER_RIGHT" promptText="nom du fichier"/>
-               </children>
-            </HBox>
+                <HBox layoutX="10.0" layoutY="10.0" prefWidth="400.0">
+                    <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Étiquette :" underline="true" />
+                        <TextField id="product" fx:id="nameTextField" alignment="CENTER_RIGHT" promptText="nom du fichier"/>
+                    </children>
+                </HBox>
                 <HBox prefWidth="400.0">
                     <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Produit :" />
