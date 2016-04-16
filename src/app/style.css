@@ -1,3 +1,11 @@
 #table_box .table-column {
-    -fx-alignment: CENTER-RIGHT;
+    -fx-alignment: CENTER;
+}
+
+#table_box_quatity_button .button {
+    -fx-padding: 10%;
+}
+
+#polygone_type_menu_button .menu-item {
+    -fx-alignment: RIGHT;
 }

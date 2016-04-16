@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+
+<fx:root type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1"
+         prefWidth="400.0" spacing="10.0">
+    <children>
+        <HBox alignment="CENTER_RIGHT">
+            <children>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="linéaire : "/>
+                <TextField id="product" fx:id="linearTextField" alignment="CENTER_RIGHT"/>
+            </children>
+            <padding>
+                <Insets top="5.0"/>
+            </padding>
+        </HBox>
+        <HBox alignment="CENTER_RIGHT">
+            <children>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="hauteur : "/>
+                <TextField id="product" fx:id="heightTextField" alignment="CENTER_RIGHT"/>
+            </children>
+            <padding>
+                <Insets top="5.0"/>
+            </padding>
+        </HBox>
+    </children>
+</fx:root>

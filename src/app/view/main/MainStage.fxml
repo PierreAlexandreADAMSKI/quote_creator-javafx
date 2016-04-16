@@ -6,33 +6,50 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import app.view.main.widgets.table_box.TableViewBox?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
             xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="app.view.main.MainController">
     <children>
         <FlowPane prefHeight="800.0" prefWidth="1280.0">
             <children>
-                <ToolBar prefHeight="40.0" prefWidth="1280.0">
+                <ToolBar prefHeight="40.0" prefWidth="400.0">
                     <items>
-                        <MenuButton fx:id="newMenu" mnemonicParsing="false" text="nouveau"/>
-                        <Button layoutX="10.0" layoutY="11.0" mnemonicParsing="false" text="Load"/>
-                        <Button layoutX="59.0" layoutY="11.0" mnemonicParsing="false" text="save"/>
-                        <Button fx:id="addButton" mnemonicParsing="false" onAction="#onAddButtonAction" text="Add"
-                                translateX="990.0"/>
-                        <Button fx:id="delButton" layoutX="179.0" layoutY="11.0" mnemonicParsing="false" text="Del"
-                                translateX="990.0" onAction="#onDelButtonAction"/>
+                        <MenuButton fx:id="newMenu" mnemonicParsing="false" text="nouveau">
+                            <tooltip>
+                                <Tooltip text="nouvel élément"/>
+                            </tooltip>
+                        </MenuButton>
+                        <Button layoutX="10.0" layoutY="11.0" mnemonicParsing="false" text="Ouvrir">
+                            <tooltip>
+                                <Tooltip text="ouvrir un nouveau projet"/>
+                            </tooltip>
+                        </Button>
+                        <Button layoutX="59.0" layoutY="11.0" mnemonicParsing="false" text="Enregister">
+                            <tooltip>
+                                <Tooltip text="enregistrer le projet"/>
+                            </tooltip>
+                        </Button>
+                        <Button fx:id="addButton" mnemonicParsing="false" onAction="#onAddButtonAction" text="+"
+                                translateX="90.0">
+                            <tooltip>
+                                <Tooltip text="ajouter l'élément au tableau"/>
+                            </tooltip>
+                        </Button>
+                        <Button fx:id="delButton" layoutX="179.0" layoutY="11.0" mnemonicParsing="false"
+                                onAction="#onDelButtonAction" text="-" translateX="90.0">
+                            <tooltip>
+                                <Tooltip text="supprimer l'élément du tableau"/>
+                            </tooltip>
+                        </Button>
                     </items>
                 </ToolBar>
+                <ToolBar prefHeight="40.0" prefWidth="880.0"/>
                 <VBox prefHeight="720.0" prefWidth="400.0">
                     <children>
                         <HBox>
                             <children>
-                                <ScrollPane fx:id="formScrollPane" prefHeight="300.0" prefWidth="400.0"
-                                            fitToWidth="true"
-                                            hbarPolicy="NEVER"
-                                            vbarPolicy="ALWAYS">
-                                </ScrollPane>
+                                <ScrollPane fx:id="formScrollPane" fitToWidth="true" hbarPolicy="NEVER"
+                                            prefHeight="300.0" prefWidth="400.0" vbarPolicy="ALWAYS"/>
                             </children>
                         </HBox>
                         <HBox layoutY="300.0">

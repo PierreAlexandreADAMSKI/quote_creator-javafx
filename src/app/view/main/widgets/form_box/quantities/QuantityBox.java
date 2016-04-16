@@ -2,77 +2,114 @@ package app.view.main.widgets.form_box.quantities;
 
 import app.view.main.MainController;
 import app.view.main.widgets.Box;
+import app.view.main.widgets.form_box.quantities.polygones.Polygon;
+import app.view.main.widgets.form_box.quantities.polygones.arc.ArcFormBox;
+import app.view.main.widgets.form_box.quantities.polygones.circle.CircleFormBox;
+import app.view.main.widgets.form_box.quantities.polygones.rectangle.RectangleFormBox;
+import app.view.main.widgets.form_box.quantities.polygones.trapeze.TrapezeFormBox;
+import app.view.main.widgets.form_box.quantities.polygones.triangle.TriangleFormBox;
+import javafx.beans.property.FloatProperty;
+import javafx.beans.property.SimpleFloatProperty;
 import javafx.fxml.FXML;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
-
-import java.util.regex.Pattern;
+import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 
 /**
  * app.view.main.widgets Created by Pierre-Alexandre Adamski on 14/04/2016.
  */
 public class QuantityBox extends Box {
+	private Polygon polygon;
+	public FloatProperty quantity;
 	@FXML
-	public TextField nameTextField;
+	public TextField stampTextField;
 	@FXML
-	public TextField productTextField;
+	public MenuButton menuButton;
 	@FXML
-	public TextField sellerTextField;
+	public MenuItem triangleItem;
 	@FXML
-	public TextField sizeTextField;
+	public MenuItem rectangleItem;
 	@FXML
-	public TextField priceWriteTextField;
+	public MenuItem trapezeItem;
 	@FXML
-	public TextField tvaTextField;
+	public MenuItem circleItem;
+	@FXML
+	public MenuItem arcItem;
+	@FXML
+	public HBox polygonBox;
+	@FXML
+	public Button addSurfaceButton;
+	@FXML
+	public Button delSurfaceButton;
+	@FXML
+	public ListView<Float> surfaceListView;
 
 	public QuantityBox(MainController controller) {
-		super("QuantityBox", controller);
-		this.initForForm();
+		super("QuantityFormBox", controller);
+		initForForm(addSurfaceButton);
+		init();
+
+		addSurfaceButton.setOnAction(event -> {
+			polygonBox.getChildren().clear();
+			if (polygonBox.getChildren().get(0) instanceof TriangleFormBox){
+				this.polygon = ((TriangleFormBox) polygonBox.getChildren().get(0)).polygon;
+			}
+			if (this.polygon != null){
+				addArea(this.polygon);
+			}
+		});
+		delSurfaceButton.setOnAction(event -> {
+			if (!surfaceListView.getItems().isEmpty()){
+				final int index = surfaceListView.getSelectionModel().getSelectedIndex();
+				delArear(index);
+			}
+		});
+		triangleItem.setOnAction(event -> {
+			polygonBox.getChildren().clear();
+			polygonBox.getChildren().add(new TriangleFormBox(controller));
+			menuButton.setText(triangleItem.getText());
+		});
+		rectangleItem.setOnAction(event -> {
+			polygonBox.getChildren().clear();
+			polygonBox.getChildren().add(new RectangleFormBox(controller));
+			menuButton.setText(rectangleItem.getText());
+
+		});
+		trapezeItem.setOnAction(event -> {
+			polygonBox.getChildren().clear();
+			polygonBox.getChildren().add(new TrapezeFormBox(controller));
+			menuButton.setText(trapezeItem.getText());
+		});
+		circleItem.setOnAction(event -> {
+			polygonBox.getChildren().clear();
+			polygonBox.getChildren().add(new CircleFormBox(controller));
+			menuButton.setText(circleItem.getText());
+		});
+		arcItem.setOnAction(event -> {
+			polygonBox.getChildren().clear();
+			polygonBox.getChildren().add(new ArcFormBox(controller));
+			menuButton.setText(arcItem.getText());
+		});
+	}
+
+	public FloatProperty quantityProperty() {
+		if (quantity == null) quantity = new SimpleFloatProperty(this, "size");
+		return quantity;
 	}
 
 	public void init() {
+		quantityProperty().set(0f);
+	}
 
-		final Pattern wholeNumberPattern = Pattern.compile("[0-9]*[.]?[0-9]*");
-		nameTextField.setOnKeyReleased(keyTyped -> this.mController.rowAdapter.setName(nameTextField.getText()));
-		productTextField.setOnKeyReleased(keyTyped -> this.mController.rowAdapter.setProduct(productTextField.getText()));
-		sellerTextField.setOnKeyReleased(keyTyped -> this.mController.rowAdapter.setSeller(sellerTextField.getText()));
+	private void addArea(Polygon polygon){
+		Float area = polygon.getArea();
+		surfaceListView.getItems().add(area);
+		quantityProperty().set(quantityProperty().get() + area);
+	}
 
-		sizeTextField.setOnKeyReleased(keyTyped -> {
-			if (!sizeTextField.getText().isEmpty() && !sizeTextField.getText().equals(""))
-				this.mController.rowAdapter.setSizeSquare(Float.valueOf(sizeTextField.getText()));
-		});
-		sizeTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-			if (!wholeNumberPattern.matcher(newValue).matches())
-				sizeTextField.setText(oldValue);
-		});
-		priceWriteTextField.setOnKeyReleased(keyTyped -> {
-			if (!priceWriteTextField.getText().isEmpty() && !priceWriteTextField.getText().equals("")) {
-				this.mController.rowAdapter.setPriceWrite(Float.valueOf(priceWriteTextField.getText()));
-				if (!tvaTextField.getText().isEmpty()
-						&& !tvaTextField.getText().equals("")) {
-					this.mController.rowAdapter.setPriceGen(Float.valueOf(priceWriteTextField.getText()) +
-							(Float.valueOf(priceWriteTextField.getText()) * Float.valueOf(tvaTextField.getText()) / 100.f));
-				}
-			}
-		});
-		priceWriteTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-			if (!wholeNumberPattern.matcher(newValue).matches())
-				priceWriteTextField.setText(oldValue);
-		});
-		tvaTextField.setOnKeyReleased(keyTyped -> {
-			if (!tvaTextField.getText().isEmpty() && !tvaTextField.getText().equals("")) {
-				this.mController.rowAdapter.setTva(Float.valueOf(tvaTextField.getText()));
-				if (!priceWriteTextField.getText().isEmpty()
-						&& !priceWriteTextField.getText().equals("")) {
-					this.mController.rowAdapter.setPriceGen(Float.valueOf(priceWriteTextField.getText()) +
-							(Float.valueOf(priceWriteTextField.getText()) * Float.valueOf(tvaTextField.getText()) / 100.f));
-				}
-			}
-		});
-		tvaTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-			if (!wholeNumberPattern.matcher(newValue).matches())
-				tvaTextField.setText(oldValue);
-		});
+	private void delArear(int index){
+		surfaceListView.getItems().remove(index);
+		Float area = surfaceListView.getItems().get(index);
+		quantityProperty().set(quantityProperty().get() - area);
 	}
 }
 

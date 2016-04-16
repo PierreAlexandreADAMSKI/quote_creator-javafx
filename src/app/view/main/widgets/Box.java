@@ -4,6 +4,7 @@ import app.view.main.MainController;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -15,7 +16,7 @@ import java.io.IOException;
 /**
  * app.view.main.widgets Created by Pierre-Alexandre Adamski on 14/04/2016.
  */
-public class Box extends Pane {
+public class Box extends VBox {
 
 	protected MainController mController;
 
@@ -32,20 +33,12 @@ public class Box extends Pane {
 		}
 	}
 
-	public void initForForm(){
-		this.setPadding(new Insets(10));
-		((VBox) this.getChildren().get(0)).setSpacing(10);
-		((VBox) this.getChildren().get(0)).getChildren().forEach(node -> {
-			((HBox) node).getChildren().stream().filter(text ->
-					text instanceof Text).forEach(text -> text.setTranslateX(-5));
-			((HBox) node).setAlignment(Pos.CENTER_RIGHT);
-		});
-
+	public void initForForm(Button addButton){
 		this.setOnMouseMoved(event -> {
-			if (((VBox) this.getChildren().get(0)).getChildren().stream().filter(textField ->
+			if (this.getChildren().stream().filter(textField ->
 					textField instanceof TextField).allMatch(predicate ->
 					!((TextField) predicate).getText().isEmpty() && !((TextField) predicate).getText().equals(""))) {
-				this.mController.addButton.setDisable(false);
+				addButton.setDisable(false);
 			}
 		});
 	}

@@ -10,43 +10,49 @@ public class RowAdapter {
 	private BooleanProperty sel;
 	private StringProperty product;
 	private StringProperty seller;
-	private ObjectProperty<Number> sizeSquare;
-	private ObjectProperty<Number> priceWrite;
-	private ObjectProperty<Number> tva;
-	private ObjectProperty<Number> priceGen;
+	private FloatProperty size;
+	private StringProperty unit;
+	private FloatProperty priceWrite;
+	private FloatProperty tva;
+	private FloatProperty priceGen;
+	private FloatProperty quantity;
 
 
 	public RowAdapter() {
 		setName("untitled");
-		setProduct(null);
-		setSeller(null);
-		setSizeSquare(null);
-		setTva(null);
-		setPriceWrite(null);
-		setPriceGen(null);
-		setSel(true);
+		setProduct("empty");
+		setSeller("empty");
+		setSize(0f);
+		setUnit("empty");
+		setTva(0f);
+		setPriceWrite(0f);
+		setPriceGen(0f);
+		setSel(false);
+		setQuantity(-1f);
 	}
 
-	public RowAdapter(String name,String product, String seller, Number sizeSquare, Number tva, Number priceWrite) {
+	public RowAdapter(String name, String product, String seller, Float size, String unit, Float tva, Float priceWrite) {
 		setName(name);
 		setProduct(product);
 		setSeller(seller);
-		setSizeSquare(sizeSquare);
+		setSize(size);
+		setUnit(unit);
 		setTva(tva);
 		setPriceWrite(priceWrite);
-		setPriceGen(priceWrite.floatValue() + (priceWrite.floatValue() * tva.floatValue() / 100.f));
-		setSel(true);
+		setPriceGen(priceWrite + (priceWrite * tva / 100f));
+		setSel(false);
+		setQuantity(-1f);
 	}
 
 	public void setName(String name) {
 		nameProperty().set(name);
 	}
 
-	public void setPriceGen(Number priceGen) {
+	public void setPriceGen(Float priceGen) {
 		priceGenProperty().set(priceGen);
 	}
 
-	public void setPriceWrite(Number priceWrite) {
+	public void setPriceWrite(Float priceWrite) {
 		priceWriteProperty().set(priceWrite);
 	}
 
@@ -62,23 +68,31 @@ public class RowAdapter {
 		sellerProperty().set(seller);
 	}
 
-	public void setSizeSquare(Number sizeSquare) {
-		sizeSquareProperty().set(sizeSquare);
+	public void setSize(Float size) {
+		sizeProperty().set(size);
 	}
 
-	public void setTva(Number tva) {
+	public void setUnit(String unit) {
+		unitProperty().set(unit);
+	}
+
+	public void setTva(Float tva) {
 		tvaProperty().set(tva);
+	}
+
+	public void setQuantity(Float quantity) {
+		quantityProperty().set(quantity);
 	}
 
 	public String getName() {
 		return nameProperty().get();
 	}
 
-	public Number getPriceGen() {
+	public Float getPriceGen() {
 		return priceGenProperty().get();
 	}
 
-	public Number getPriceWrite() {
+	public Float getPriceWrite() {
 		return priceWriteProperty().get();
 	}
 
@@ -94,11 +108,17 @@ public class RowAdapter {
 		return sellerProperty().get();
 	}
 
-	public Number getSizeSquare() {
-		return sizeSquareProperty().get();
+	public Float getSize() {
+		return sizeProperty().get();
 	}
 
-	public Number getTva() {
+	public String getUnit() { return unitProperty().get(); }
+
+	public Float getQuantity() {
+		return quantityProperty().get();
+	}
+
+	public Float getTva() {
 		return tvaProperty().get();
 	}
 
@@ -122,23 +142,33 @@ public class RowAdapter {
 		return seller;
 	}
 
-	public ObjectProperty<Number> sizeSquareProperty() {
-		if (sizeSquare == null) sizeSquare = new SimpleObjectProperty<>(this, "size");
-		return sizeSquare;
+	public FloatProperty sizeProperty() {
+		if (size == null) size = new SimpleFloatProperty(this, "size");
+		return size;
 	}
 
-	public ObjectProperty<Number> priceWriteProperty() {
-		if (priceWrite == null) priceWrite = new SimpleObjectProperty<>(this, "priceWrite");
+	private StringProperty unitProperty() {
+		if (unit == null) unit = new SimpleStringProperty(this, "unit");
+		return unit;
+	}
+
+	public FloatProperty priceWriteProperty() {
+		if (priceWrite == null) priceWrite = new SimpleFloatProperty(this, "priceWrite");
 		return priceWrite;
 	}
 
-	public ObjectProperty<Number> tvaProperty() {
-		if (tva == null) tva = new SimpleObjectProperty<>(this, "tva");
+	public FloatProperty tvaProperty() {
+		if (tva == null) tva = new SimpleFloatProperty(this, "tva");
 		return tva;
 	}
 
-	public ObjectProperty<Number> priceGenProperty() {
-		if (priceGen == null) priceGen = new SimpleObjectProperty<>(this, "priceGen");
+	public FloatProperty priceGenProperty() {
+		if (priceGen == null) priceGen = new SimpleFloatProperty(this, "priceGen");
 		return priceGen;
+	}
+
+	private FloatProperty quantityProperty() {
+		if (quantity == null) quantity = new SimpleFloatProperty(this, "quantity");
+		return quantity;
 	}
 }

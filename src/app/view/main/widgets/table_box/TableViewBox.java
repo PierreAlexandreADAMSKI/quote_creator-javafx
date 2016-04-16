@@ -5,7 +5,6 @@ import app.view.main.adapters.RowAdapter;
 import app.view.main.widgets.Box;
 import app.view.main.widgets.form_box.product.ProductBox;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -19,15 +18,25 @@ public class TableViewBox extends Box {
 
 	private MainController mController;
 	@FXML
-	public TableView<RowAdapter> tableBox;
-	private TableColumn<RowAdapter, Boolean> selCol = new TableColumn<>("");
-	private TableColumn<RowAdapter, String> productWriteCol = new TableColumn<>("Produit");
-	private TableColumn<RowAdapter, String> sellerSelCol = new TableColumn<>("revendeur");
-	private TableColumn<RowAdapter, Float> sizeSelCol = new TableColumn<>("taille (m2)");
-	private TableColumn<RowAdapter, Float> priceWriteCol = new TableColumn<>("prix HT (€/m2)");
-	private TableColumn<RowAdapter, Float> tvaCol = new TableColumn<>("TVA");
-	private TableColumn<RowAdapter, Float> priceGenCol = new TableColumn<>("prix TTC (€/m2)");
-	private TableColumn<RowAdapter, Boolean> quantityCol = new TableColumn<>("Quantité");
+	public TableView<RowAdapter> tableView;
+	@FXML
+	public TableColumn<RowAdapter, Boolean> selCol;
+	@FXML
+	public TableColumn<RowAdapter, String> productCol;
+	@FXML
+	public TableColumn<RowAdapter, String> sellerCol;
+	@FXML
+	public TableColumn<RowAdapter, Float> sizeCol;
+	@FXML
+	public TableColumn<RowAdapter, String> unitCol;
+	@FXML
+	public TableColumn<RowAdapter, Float> priceHTCol;
+	@FXML
+	public TableColumn<RowAdapter, Float> quantityCol;
+	@FXML
+	public TableColumn<RowAdapter, Float> tvaCol;
+	@FXML
+	public TableColumn<RowAdapter, Float> priceTTCCol;
 
 
 	public TableViewBox(MainController controller) {
@@ -35,11 +44,27 @@ public class TableViewBox extends Box {
 		this.mController = controller;
 
 		initTable();
+		initEvents();
 	}
 
 	private void initTable() {
+		productCol.setCellValueFactory(new PropertyValueFactory<>("product"));
+		sellerCol.setCellValueFactory(new PropertyValueFactory<>("seller"));
+		sizeCol.setCellValueFactory(new PropertyValueFactory<>("size"));
+		unitCol.setCellValueFactory(new PropertyValueFactory<>("unit"));
+		priceHTCol.setCellValueFactory(new PropertyValueFactory<>("priceWrite"));
+		tvaCol.setCellValueFactory(new PropertyValueFactory<>("tva"));
+		priceTTCCol.setCellValueFactory(new PropertyValueFactory<>("priceGen"));
+		selCol.setCellValueFactory(new PropertyValueFactory<>("selCol"));
+		selCol.setCellFactory(CheckBoxTableCell.forTableColumn(selCol));
+		selCol.setEditable(true);
+		quantityCol.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+		quantityCol.setCellFactory(factory -> new QuantityTableCell(this.mController));
+	}
+
+	private void initEvents(){
 		this.mController.delButton.disableProperty().bind(
-				Bindings.not(Bindings.size(tableBox.getItems()).greaterThan(0)));
+				Bindings.not(Bindings.size(tableView.getItems()).greaterThan(0)));
 
 		//TODO CUSTOM EVENT CLASS -> <Class>KeyEventHandler<Class/>
 		this.setOnKeyReleased(event -> {
@@ -51,13 +76,15 @@ public class TableViewBox extends Box {
 						productFormBox.init();
 						break;
 					}
+					/* BUG
 					case D: {
-						if (!tableBox.getItems().isEmpty()) {
-							final RowAdapter temp = tableBox.getSelectionModel().getSelectedItem();
-							tableBox.getItems().add(temp);
+						if (!tableView.getItems().isEmpty()) {
+							final RowAdapter temp = tableView.getSelectionModel().getSelectedItem();
+							tableView.getItems().add(temp);
 						}
 						break;
 					}
+					*/
 					default:
 						break;
 				}
@@ -70,36 +97,5 @@ public class TableViewBox extends Box {
 				}
 			}
 		});
-
-		//for the selCol to be editable
-		tableBox.setEditable(true);
-
-		tvaCol.setPrefWidth(60);
-		selCol.setPrefWidth(30);
-		selCol.setResizable(false);
-
-		tableBox.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
-		productWriteCol.setCellValueFactory(new PropertyValueFactory<>("product"));
-		sellerSelCol.setCellValueFactory(new PropertyValueFactory<>("seller"));
-		sizeSelCol.setCellValueFactory(new PropertyValueFactory<>("size"));
-		priceWriteCol.setCellValueFactory(new PropertyValueFactory<>("priceWrite"));
-		tvaCol.setCellValueFactory(new PropertyValueFactory<>("tva"));
-		priceGenCol.setCellValueFactory(new PropertyValueFactory<>("priceGen"));
-		selCol.setCellValueFactory(new PropertyValueFactory<>("selCol"));
-		selCol.setCellFactory(CheckBoxTableCell.forTableColumn(selCol));
-		selCol.setEditable(true);
-		quantityCol.setCellValueFactory(features -> new SimpleBooleanProperty(features.getValue() != null));
-		quantityCol.setCellFactory(factory -> new QuantityTableCell(this.mController));
-
-		tableBox.getColumns().setAll(selCol, productWriteCol,
-				sellerSelCol, sizeSelCol,
-				priceWriteCol, tvaCol,
-				priceGenCol, quantityCol);
-
-		/*common params for all the columns */
-		for (TableColumn column : tableBox.getColumns()) {
-			column.setSortable(false);
-		}
 	}
 }

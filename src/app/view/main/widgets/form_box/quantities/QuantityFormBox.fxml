@@ -1,52 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 
-<fx:root type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1"
+         prefHeight="300.0" prefWidth="400.0" spacing="10.0">
     <children>
-        <VBox fx:id="productFormBox" prefHeight="300.0" prefWidth="400.0">
+        <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" prefWidth="400.0">
             <children>
-                <HBox layoutX="10.0" layoutY="10.0" prefWidth="400.0">
-                    <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Étiquette :" underline="true" />
-                        <TextField id="product" fx:id="nameTextField" alignment="CENTER_RIGHT" promptText="nom du fichier"/>
-                    </children>
-                </HBox>
-                <HBox prefWidth="400.0">
-                    <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Produit :" />
-                        <TextField id="product" fx:id="productTextField" />
-                    </children>
-                </HBox>
-                <HBox layoutX="10.0" layoutY="10.0" prefWidth="400.0">
-                    <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Revendeur :" />
-                        <TextField id="seller" fx:id="sellerTextField" />
-                    </children>
-                </HBox>
-                <HBox layoutX="10.0" layoutY="36.0" prefWidth="400.0">
-                    <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Taille en m2 :" />
-                        <TextField id="size" fx:id="sizeTextField" />
-                    </children>
-                </HBox>
-                <HBox layoutX="10.0" layoutY="62.0" prefWidth="400.0">
-                    <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Prix HT en € :" />
-                        <TextField id="priceWrite" fx:id="priceWriteTextField" />
-                    </children>
-                </HBox>
-                <HBox layoutX="10.0" layoutY="88.0" prefWidth="400.0">
-                    <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="TVA en % :" />
-                        <TextField id="tva" fx:id="tvaTextField" />
-                    </children>
-                </HBox>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Étiquette :" underline="true"/>
+                <Text layoutX="183.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" "/>
+                <TextField id="product" fx:id="stampTextField" alignment="CENTER_RIGHT" promptText="nom du fichier"/>
             </children>
-        </VBox>
+        </HBox>
+        <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" prefWidth="400.0">
+            <children>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="type de polygone : "/>
+                <MenuButton fx:id="menuButton" mnemonicParsing="false" prefWidth="163.0" text="..."
+                            textAlignment="RIGHT">
+                    <items>
+                        <MenuItem fx:id="triangleItem"  mnemonicParsing="false" text="Triangle △"/>
+                        <MenuItem fx:id="rectangleItem" mnemonicParsing="false" text="Rectangle ⃞"/>
+                        <MenuItem fx:id="trapezeItem"   mnemonicParsing="false" text="Trapèze ⏢"/>
+                        <MenuItem fx:id="circleItem"    mnemonicParsing="false" text="Cercle   ⃝"/>
+                        <MenuItem fx:id="arcItem"       mnemonicParsing="false" text="Arc ⌒"/>
+                    </items>
+                </MenuButton>
+            </children>
+        </HBox>
+        <HBox fx:id="polygonBox" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="36.0" prefWidth="400.0"/>
+        <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="114.0" prefWidth="400.0">
+            <children>
+                <VBox prefHeight="324.0" prefWidth="400.0">
+                    <children>
+                        <ToolBar prefHeight="40.0" prefWidth="370.0">
+                            <items>
+                                <Button fx:id="addSurfaceButton" mnemonicParsing="false" prefHeight="26.0"
+                                        prefWidth="26.0" text="+">
+                                    <tooltip>
+                                        <Tooltip text="ajouter une surface"/>
+                                    </tooltip>
+                                </Button>
+                                <Button fx:id="delSurfaceButton" mnemonicParsing="false" prefHeight="26.0"
+                                        prefWidth="26.0" text="-">
+                                    <tooltip>
+                                        <Tooltip text="supprimer une surface"/>
+                                    </tooltip>
+                                </Button>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Table des surfaces"
+                                      translateX="90.0"/>
+                            </items>
+                        </ToolBar>
+                        <ScrollPane prefHeight="280.0" prefWidth="370.0">
+                            <content>
+                                <ListView fx:id="surfaceListView"  prefHeight="280.0"
+                                          prefWidth="340.0"/>
+                            </content>
+                        </ScrollPane>
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
     </children>
+    <padding>
+        <Insets top="10.0"/>
+    </padding>
 </fx:root>
