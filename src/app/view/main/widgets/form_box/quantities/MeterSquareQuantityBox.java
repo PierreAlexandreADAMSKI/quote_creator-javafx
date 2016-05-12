@@ -17,11 +17,8 @@ import javafx.scene.layout.HBox;
 /**
  * app.view.main.widgets Created by Pierre-Alexandre Adamski on 14/04/2016.
  */
-public class QuantityBox extends Box {
+public class MeterSquareQuantityBox extends Box {
 	private Polygon polygon;
-	public FloatProperty quantity;
-	@FXML
-	public TextField stampTextField;
 	@FXML
 	public MenuButton menuButton;
 	@FXML
@@ -43,22 +40,30 @@ public class QuantityBox extends Box {
 	@FXML
 	public ListView<Float> surfaceListView;
 
-	public QuantityBox(MainController controller) {
-		super("QuantityFormBox", controller);
+	private MainController controller;
+
+	public MeterSquareQuantityBox(MainController controller) {
+		super("MeterSquareQuantityFormBox", controller);
+		this.controller = controller;
 		initForForm(addSurfaceButton);
-		init();
 
 		addSurfaceButton.setOnAction(event -> {
-			polygonBox.getChildren().clear();
-			if (polygonBox.getChildren().get(0) instanceof TriangleFormBox){
+			controller.addButton.setDisable(false);
+			if (polygonBox.getChildren().get(0) instanceof TriangleFormBox) {
 				this.polygon = ((TriangleFormBox) polygonBox.getChildren().get(0)).polygon;
 			}
-			if (this.polygon != null){
+			if (this.polygon != null) {
 				addArea(this.polygon);
 			}
+			if (surfaceListView.getItems().isEmpty() && surfaceListView.getItems().size() == 0)
+				controller.addButton.setDisable(true);
+			else controller.addButton.setDisable(false);
 		});
 		delSurfaceButton.setOnAction(event -> {
-			if (!surfaceListView.getItems().isEmpty()){
+			if (surfaceListView.getItems().isEmpty() && surfaceListView.getItems().size() == 0)
+				controller.addButton.setDisable(true);
+			else controller.addButton.setDisable(false);
+			if (!surfaceListView.getItems().isEmpty()) {
 				final int index = surfaceListView.getSelectionModel().getSelectedIndex();
 				delArear(index);
 			}
@@ -91,25 +96,16 @@ public class QuantityBox extends Box {
 		});
 	}
 
-	public FloatProperty quantityProperty() {
-		if (quantity == null) quantity = new SimpleFloatProperty(this, "size");
-		return quantity;
-	}
-
-	public void init() {
-		quantityProperty().set(0f);
-	}
-
-	private void addArea(Polygon polygon){
+	private void addArea(Polygon polygon) {
 		Float area = polygon.getArea();
 		surfaceListView.getItems().add(area);
-		quantityProperty().set(quantityProperty().get() + area);
+		this.controller.currentRowAdapter().setQuantity(this.controller.currentRowAdapter().getQuantity() + area);
 	}
 
-	private void delArear(int index){
-		surfaceListView.getItems().remove(index);
+	private void delArear(int index) {
 		Float area = surfaceListView.getItems().get(index);
-		quantityProperty().set(quantityProperty().get() - area);
+		surfaceListView.getItems().remove(index);
+		this.controller.currentRowAdapter().setQuantity(this.controller.currentRowAdapter().getQuantity() - area);
 	}
 }
 

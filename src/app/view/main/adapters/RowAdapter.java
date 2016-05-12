@@ -22,13 +22,13 @@ public class RowAdapter {
 		setName("untitled");
 		setProduct("empty");
 		setSeller("empty");
-		setSize(0f);
+		setSize(0.f);
 		setUnit("empty");
-		setTva(0f);
-		setPriceWrite(0f);
-		setPriceGen(0f);
+		setTva(0.f);
+		setPriceWrite(0.f);
+		setPriceGen(0.f);
 		setSel(false);
-		setQuantity(-1f);
+		setQuantity(0.f);
 	}
 
 	public RowAdapter(String name, String product, String seller, Float size, String unit, Float tva, Float priceWrite) {
@@ -41,7 +41,7 @@ public class RowAdapter {
 		setPriceWrite(priceWrite);
 		setPriceGen(priceWrite + (priceWrite * tva / 100f));
 		setSel(false);
-		setQuantity(-1f);
+		setQuantity(-1.f);
 	}
 
 	public void setName(String name) {
@@ -60,9 +60,7 @@ public class RowAdapter {
 		productProperty().set(product);
 	}
 
-	public void setSel(boolean sel) {
-		selProperty().set(sel);
-	}
+	public void setSel(boolean sel) { selProperty().set(sel); }
 
 	public void setSeller(String seller) {
 		sellerProperty().set(seller);
@@ -72,16 +70,16 @@ public class RowAdapter {
 		sizeProperty().set(size);
 	}
 
+	public void setQuantity(Float quantity) {
+		quantityProperty().set(quantity);
+	}
+
 	public void setUnit(String unit) {
 		unitProperty().set(unit);
 	}
 
 	public void setTva(Float tva) {
 		tvaProperty().set(tva);
-	}
-
-	public void setQuantity(Float quantity) {
-		quantityProperty().set(quantity);
 	}
 
 	public String getName() {
@@ -167,7 +165,7 @@ public class RowAdapter {
 		return priceGen;
 	}
 
-	private FloatProperty quantityProperty() {
+	public FloatProperty quantityProperty() {
 		if (quantity == null) quantity = new SimpleFloatProperty(this, "quantity");
 		return quantity;
 	}

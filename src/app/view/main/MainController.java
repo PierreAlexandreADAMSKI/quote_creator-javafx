@@ -2,14 +2,13 @@ package app.view.main;
 
 import app.view.main.widgets.form_box.product.ProductBox;
 import app.view.main.adapters.RowAdapter;
-import app.view.main.widgets.form_box.quantities.QuantityBox;
+import app.view.main.widgets.form_box.quantities.MeterSquareQuantityBox;
 import app.view.main.widgets.table_box.QuantityTableCell;
 import app.view.main.widgets.table_box.TableViewBox;
-import javafx.event.EventHandler;
+import com.sun.javafx.scene.control.skin.LabeledText;
+import javafx.beans.binding.FloatBinding;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
 /**
@@ -26,12 +25,29 @@ public class MainController {
 	public MenuButton newMenu;
 	@FXML
 	public ScrollPane tableScrollPane;
+	public TableViewBox tableViewBox;
 
 	private MenuItem row = new MenuItem("ligne");
 
-	public static QuantityTableCell currentClickedCell;
+	private QuantityTableCell currentClickedCell;
+	private int currentClickedRowIndex;
 
 
+	public int getCurrentClickedRowIndex() {
+		return currentClickedRowIndex;
+	}
+
+	public void setCurrentClickedRowIndex(int currentClickedRowIndex) {
+		this.currentClickedRowIndex = currentClickedRowIndex;
+	}
+
+	public QuantityTableCell getCurrentClickedCell() {
+		return currentClickedCell;
+	}
+
+	public void setCurrentClickedCell(QuantityTableCell currentClickedCell) {
+		this.currentClickedCell = currentClickedCell;
+	}
 
 	@FXML
 	private void initialize() {
@@ -44,7 +60,9 @@ public class MainController {
 		});
 		newMenu.getItems().setAll(row);
 
-		tableScrollPane.setContent(new TableViewBox(this));
+		tableViewBox = new TableViewBox(this);
+		tableScrollPane.setContent(tableViewBox);
+
 	}
 
 	/**
@@ -58,13 +76,14 @@ public class MainController {
 	public void onAddButtonAction() {
 
 		if (formScrollPane.getContent() instanceof ProductBox) {
-			((TableViewBox) tableScrollPane.getContent()).tableView.getItems().add(productAdapterForTableView());
-		} else if (formScrollPane.getContent() instanceof  QuantityBox) {
-			final int selectedRowOnClick = currentClickedCell.getIndex();
-			if (selectedRowOnClick != -1) {
-				final RowAdapter rowAdapter = currentClickedCell.getTableView().getItems().get(selectedRowOnClick);
+			tableViewBox.tableView.getItems().add(productAdapterForTableView());
+			//((TableViewBox) tableScrollPane.getContent()).tableView.getItems().add(productAdapterForTableView());
+		} else if (formScrollPane.getContent() instanceof MeterSquareQuantityBox) {
+			if (currentClickedRowIndex >= -1) {
 				//rowAdapter.setQuantity(999.9f);
-				currentClickedCell.setGraphic(new Text(rowAdapter.getQuantity().toString()));
+				final Float quantity = currentRowAdapter().getQuantity();
+				currentClickedCell.text = quantity.toString();
+				currentRowAdapter().setPriceGen(currentRowAdapter().getPriceGen() * quantity);
 			}
 		}
 		formScrollPane.setContent(null);
@@ -104,19 +123,21 @@ public class MainController {
 				Float.valueOf(productBox.priceWriteTextField.getText()));
 	}
 
-	private RowAdapter quantityAdapterForTableView(RowAdapter entry) {
-		final QuantityBox quantityBox = (QuantityBox) formScrollPane.getContent();
+	private MeterSquareQuantityBox quantityAdapterForTableView() {
+		final MeterSquareQuantityBox meterSquareQuantityBox = (MeterSquareQuantityBox) formScrollPane.getContent();
 		//some quantity service
-		//entry.setQuantity(quantityBox.getQuantity());
-		return entry;
+		//entry.setQuantity(meterSquareQuantityBox.getQuantity());
+		return null;
 	}
 
 
+	public RowAdapter currentRowAdapter() {
+		return currentClickedCell.getTableView().getItems().get(currentClickedRowIndex);
+	}
 
 		@FXML
 	public void onDelButtonAction() {
 		if (tableScrollPane.getContent() instanceof TableViewBox) {
-			final TableViewBox tableViewBox = (TableViewBox) tableScrollPane.getContent();
 			if (!tableViewBox.tableView.getItems().isEmpty()) {
 				final int index = tableViewBox.tableView.getSelectionModel().getSelectedIndex();
 				tableViewBox.tableView.getItems().remove(index);
