@@ -55,10 +55,10 @@
                                       translateX="90.0"/>
                             </items>
                         </ToolBar>
-                        <ScrollPane prefHeight="280.0" prefWidth="370.0">
+                        <ScrollPane prefHeight="280.0" prefWidth="370.0" minHeight="280.0" minWidth="370.0">
                             <content>
                                 <ListView fx:id="surfaceListView"  prefHeight="280.0"
-                                          prefWidth="340.0"/>
+                                          prefWidth="340.0" minHeight="280.0" minWidth="340.0"/>
                             </content>
                         </ScrollPane>
                     </children>

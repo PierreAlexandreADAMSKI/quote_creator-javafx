@@ -3,13 +3,12 @@ package app.view.main.widgets.form_box.quantities;
 import app.view.main.MainController;
 import app.view.main.widgets.Box;
 import app.view.main.widgets.form_box.quantities.polygones.Polygon;
+import app.view.main.widgets.form_box.quantities.polygones.PolygonBox;
 import app.view.main.widgets.form_box.quantities.polygones.arc.ArcFormBox;
 import app.view.main.widgets.form_box.quantities.polygones.circle.CircleFormBox;
 import app.view.main.widgets.form_box.quantities.polygones.rectangle.RectangleFormBox;
 import app.view.main.widgets.form_box.quantities.polygones.trapeze.TrapezeFormBox;
 import app.view.main.widgets.form_box.quantities.polygones.triangle.TriangleFormBox;
-import javafx.beans.property.FloatProperty;
-import javafx.beans.property.SimpleFloatProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -49,8 +48,8 @@ public class MeterSquareQuantityBox extends Box {
 
 		addSurfaceButton.setOnAction(event -> {
 			controller.addButton.setDisable(false);
-			if (polygonBox.getChildren().get(0) instanceof TriangleFormBox) {
-				this.polygon = ((TriangleFormBox) polygonBox.getChildren().get(0)).polygon;
+			if (polygonBox.getChildren().get(0) instanceof PolygonBox) {
+				this.polygon = ((PolygonBox) polygonBox.getChildren().get(0)).getPolygon();
 			}
 			if (this.polygon != null) {
 				addArea(this.polygon);
@@ -63,7 +62,7 @@ public class MeterSquareQuantityBox extends Box {
 			if (surfaceListView.getItems().isEmpty() && surfaceListView.getItems().size() == 0)
 				controller.addButton.setDisable(true);
 			else controller.addButton.setDisable(false);
-			if (!surfaceListView.getItems().isEmpty()) {
+			if (!surfaceListView.getItems().isEmpty() && surfaceListView.getItems().size() > 0) {
 				final int index = surfaceListView.getSelectionModel().getSelectedIndex();
 				delArear(index);
 			}
@@ -99,13 +98,13 @@ public class MeterSquareQuantityBox extends Box {
 	private void addArea(Polygon polygon) {
 		Float area = polygon.getArea();
 		surfaceListView.getItems().add(area);
-		this.controller.currentRowAdapter().setQuantity(this.controller.currentRowAdapter().getQuantity() + area);
+		this.controller.getClickedRowAdapter().setQuantity(this.controller.getClickedRowAdapter().getQuantity() + area);
 	}
 
 	private void delArear(int index) {
 		Float area = surfaceListView.getItems().get(index);
 		surfaceListView.getItems().remove(index);
-		this.controller.currentRowAdapter().setQuantity(this.controller.currentRowAdapter().getQuantity() - area);
+		this.controller.getClickedRowAdapter().setQuantity(this.controller.getClickedRowAdapter().getQuantity() - area);
 	}
 }
 

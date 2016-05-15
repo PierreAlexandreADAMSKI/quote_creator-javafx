@@ -7,13 +7,14 @@
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 
+<?import app.view.main.javafx.FloatTextField?>
 <fx:root spacing="10.0" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8.0.40"
          xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <HBox alignment="CENTER_RIGHT" prefWidth="400.0">
             <children>
                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="rayon : "/>
-                <TextField id="product" fx:id="radiusTextField" alignment="CENTER_RIGHT"/>
+                <FloatTextField fx:id="radiusTextField" alignment="CENTER_RIGHT"/>
             </children>
         </HBox>
     </children>

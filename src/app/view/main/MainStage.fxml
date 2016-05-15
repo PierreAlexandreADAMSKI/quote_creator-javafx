@@ -19,12 +19,13 @@
                                 <Tooltip text="nouvel élément"/>
                             </tooltip>
                         </MenuButton>
-                        <Button layoutX="10.0" layoutY="11.0" mnemonicParsing="false" text="Ouvrir">
+                        <Button fx:id="openButton" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" text="Ouvrir" onAction="#OnOpenButtonAction">
                             <tooltip>
                                 <Tooltip text="ouvrir un nouveau projet"/>
                             </tooltip>
                         </Button>
-                        <Button layoutX="59.0" layoutY="11.0" mnemonicParsing="false" text="Enregister">
+                        <Button fx:id="saveButton" layoutX="59.0" layoutY="11.0" mnemonicParsing="false"
+                                text="Enregister" onAction="#onSaveButtonAction">
                             <tooltip>
                                 <Tooltip text="enregistrer le projet"/>
                             </tooltip>
@@ -49,7 +50,7 @@
                         <HBox>
                             <children>
                                 <ScrollPane fx:id="formScrollPane" fitToWidth="true" hbarPolicy="NEVER"
-                                            prefHeight="300.0" prefWidth="400.0" vbarPolicy="ALWAYS"/>
+                                            prefHeight="300.0" prefWidth="400.0" vbarPolicy="AS_NEEDED"/>
                             </children>
                         </HBox>
                         <HBox layoutY="300.0">

@@ -1,44 +1,48 @@
 package app.view.main.widgets.form_box.quantities.polygones.triangle;
 
 import app.view.main.MainController;
-import app.view.main.widgets.Box;
+import app.view.main.javafx.FloatTextField;
 import app.view.main.widgets.form_box.quantities.polygones.Polygon;
+import app.view.main.widgets.form_box.quantities.polygones.PolygonBox;
+import app.view.main.widgets.form_box.text_formaters.FloatFormatter;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 
-import java.util.regex.Pattern;
+import java.util.function.UnaryOperator;
 
 /**
  * app.view.main.widgets.form_box.quantities.polygones Created by Pierre-Alexandre Adamski on 16/04/2016.
  */
-public class TriangleFormBox extends Box {
+public class TriangleFormBox extends PolygonBox {
 	@FXML
-	public TextField linearTextField;
+	public FloatTextField linearTextField;
 	@FXML
-	public TextField heightTextField;
-	public Polygon polygon = new Triangle();
+	public FloatTextField heightTextField;
 
-	//TODO found a better way
+	private Triangle polygon;
+
 	public TriangleFormBox(MainController controller) {
 		super("TriangleFormBox", controller);
-		final Pattern wholeNumberPattern = Pattern.compile("[0-9]*[.]?[0-9]*");
+		polygon = new Triangle();
 
-		heightTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-			if (!wholeNumberPattern.matcher(newValue).matches())
-				heightTextField.setText(oldValue);
-		});
-		linearTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-			if (!wholeNumberPattern.matcher(newValue).matches())
-				linearTextField.setText(oldValue);
-		});
+	}
+
+	@Override
+	public Polygon getPolygon() {
+		return polygon;
+	}
+
+	@Override
+	protected void comportment() {
 		heightTextField.setOnKeyReleased(event -> {
 			if (!heightTextField.getText().equals("") && heightTextField != null){
-				((Triangle) polygon).setHeight(Float.valueOf(heightTextField.getText()));
+				polygon.setHeight(Float.valueOf(heightTextField.getText()));
 			}
 		});
 		linearTextField.setOnKeyReleased(event -> {
 			if (!linearTextField.getText().equals("") && linearTextField != null){
-				((Triangle) polygon).setBase(Float.valueOf(linearTextField.getText()));
+				polygon.setBase(Float.valueOf(linearTextField.getText()));
 			}
 		});
 	}

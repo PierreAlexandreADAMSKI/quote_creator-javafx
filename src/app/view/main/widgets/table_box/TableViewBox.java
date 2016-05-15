@@ -11,10 +11,13 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.io.Serializable;
+
 /**
  * app.view.main.widgets.table_box Created by Pierre-Alexandre Adamski on 14/04/2016.
  */
 public class TableViewBox extends Box {
+
 
 	private MainController mController;
 	@FXML

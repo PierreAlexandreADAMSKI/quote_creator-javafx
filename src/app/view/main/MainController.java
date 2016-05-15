@@ -1,15 +1,28 @@
 package app.view.main;
 
+import app.service.SaveTableViewService;
+import app.service.StageService;
 import app.view.main.widgets.form_box.product.ProductBox;
 import app.view.main.adapters.RowAdapter;
 import app.view.main.widgets.form_box.quantities.MeterSquareQuantityBox;
 import app.view.main.widgets.table_box.QuantityTableCell;
 import app.view.main.widgets.table_box.TableViewBox;
-import com.sun.javafx.scene.control.skin.LabeledText;
-import javafx.beans.binding.FloatBinding;
+import javafx.application.Platform;
+import javafx.beans.property.IntegerProperty;
+import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.text.Text;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
+import javax.jnlp.FileSaveService;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
 
 /**
  * java.view Created by Pierre-Alexandre Adamski on 27/03/2016.
@@ -26,28 +39,23 @@ public class MainController {
 	@FXML
 	public ScrollPane tableScrollPane;
 	public TableViewBox tableViewBox;
+	@FXML
+	public Button saveButton;
 
 	private MenuItem row = new MenuItem("ligne");
 
-	private QuantityTableCell currentClickedCell;
-	private int currentClickedRowIndex;
+	/**
+	 * Current <=> JustAdded
+	 */
+	private RowAdapter currentRowAdapter;
 
+	/**
+	 * OnRowClicked <=> quantity clicked
+	 */
+	private RowAdapter clickedRowAdapter;
+	private QuantityTableCell clickedCell;
+	private int clickedRowIndex;
 
-	public int getCurrentClickedRowIndex() {
-		return currentClickedRowIndex;
-	}
-
-	public void setCurrentClickedRowIndex(int currentClickedRowIndex) {
-		this.currentClickedRowIndex = currentClickedRowIndex;
-	}
-
-	public QuantityTableCell getCurrentClickedCell() {
-		return currentClickedCell;
-	}
-
-	public void setCurrentClickedCell(QuantityTableCell currentClickedCell) {
-		this.currentClickedCell = currentClickedCell;
-	}
 
 	@FXML
 	private void initialize() {
@@ -62,54 +70,38 @@ public class MainController {
 
 		tableViewBox = new TableViewBox(this);
 		tableScrollPane.setContent(tableViewBox);
-
 	}
 
-	/**
-	 * TODO unités : U->unité, ml->mètre linéaire, m2->mètres carré, m3->mètre cube, ens->ensemble
-	 * TODO quantité (une colonne clicable qui ouvre un tableau) -> linéaire(hauteur), -ouvertures,
-	 * TODO (+) opérations entre (linéaireN, hauteurN, ouvertureN)
-	 * TODO pouvoir calculer des surfaces sur polygone N cotés (N est choisi par l'utilisateur ainsi que la formule.
-	 */
+	public RowAdapter getCurrentRowAdapter() {
+		return currentRowAdapter;
+	}
 
-	@FXML
-	public void onAddButtonAction() {
+	public void setCurrentRowAdapter(RowAdapter currentRowAdapter) {
+		this.currentRowAdapter = currentRowAdapter;
+	}
 
-		if (formScrollPane.getContent() instanceof ProductBox) {
-			tableViewBox.tableView.getItems().add(productAdapterForTableView());
-			//((TableViewBox) tableScrollPane.getContent()).tableView.getItems().add(productAdapterForTableView());
-		} else if (formScrollPane.getContent() instanceof MeterSquareQuantityBox) {
-			if (currentClickedRowIndex >= -1) {
-				//rowAdapter.setQuantity(999.9f);
-				final Float quantity = currentRowAdapter().getQuantity();
-				currentClickedCell.text = quantity.toString();
-				currentRowAdapter().setPriceGen(currentRowAdapter().getPriceGen() * quantity);
-			}
-		}
-		formScrollPane.setContent(null);
+	public void setClickedRowAdapter(RowAdapter clickedRowAdapter) {
+		this.clickedRowAdapter = clickedRowAdapter;
+	}
 
-		/*
-		if (treeView.getRoot() == null) {
-			//TODO get the project name -> create a project system
-			treeView.setRoot(new TreeItem<>("nom du projet"));
-		}
-		treeView.getRoot().getChildren().add(
-				treeView.getRoot().getChildren().size(), new TreeItem<>(rowAdapter.getName())
-		);
-		treeView.edit();
-		treeView.getRoot().getChildren().get(
-				treeView.getRoot().getChildren().size() - 1
-		).getChildren().addAll(
-				new TreeItem<>(rowAdapter.getSel() ? "on" : "off"),
-				new TreeItem<>(rowAdapter.getProduct()),
-				new TreeItem<>(rowAdapter.getSeller()),
-				new TreeItem<>(rowAdapter.getSize().toString()),
-				new TreeItem<>(rowAdapter.getPriceWrite().toString()),
-				new TreeItem<>(rowAdapter.getTva().toString()),
-				new TreeItem<>(rowAdapter.getPriceGen().toString())
-		);
-		*/
-		addButton.setDisable(true);
+	public RowAdapter getClickedRowAdapter() {
+		return clickedRowAdapter;
+	}
+
+	public int getClickedRowIndex() {
+		return clickedRowIndex;
+	}
+
+	public void setClickedRowIndex(int clickedRowIndex) {
+		this.clickedRowIndex = clickedRowIndex;
+	}
+
+	public QuantityTableCell getClickedCell() {
+		return clickedCell;
+	}
+
+	public void setClickedCell(QuantityTableCell clickedCell) {
+		this.clickedCell = clickedCell;
 	}
 
 	private RowAdapter productAdapterForTableView() {
@@ -131,16 +123,42 @@ public class MainController {
 	}
 
 
-	public RowAdapter currentRowAdapter() {
-		return currentClickedCell.getTableView().getItems().get(currentClickedRowIndex);
+	/**
+	 * TODO unités : U->unité, m3->mètre cube, ens->ensemble
+	 * TODO OUVERTURES
+	 * TODO pouvoir calculer des surfaces sur polygone N cotés (N est choisi par l'utilisateur ainsi que la formule.
+	 */
+
+	@FXML
+	public void onAddButtonAction() {
+
+		if (formScrollPane.getContent() instanceof ProductBox) {
+			this.setCurrentRowAdapter(productAdapterForTableView());
+			tableViewBox.tableView.getItems().add(this.getCurrentRowAdapter());
+			//((TableViewBox) tableScrollPane.getContent()).tableView.getItems().add(productAdapterForTableView());
+		} else if (formScrollPane.getContent() instanceof MeterSquareQuantityBox) {
+			//rowAdapter.setQuantity(999.9f);
+			final Float quantity = getClickedRowAdapter().getQuantity();
+			getClickedRowAdapter().setPriceGen(getClickedRowAdapter().getPriceGen() * quantity);
+		}
+		formScrollPane.setContent(null);
+
+		//TODO get the project name -> create a project system
+
+		addButton.setDisable(true);
 	}
 
-		@FXML
+	@FXML
 	public void onDelButtonAction() {
 		if (tableScrollPane.getContent() instanceof TableViewBox) {
-			if (!tableViewBox.tableView.getItems().isEmpty()) {
+			if (!tableViewBox.tableView.getItems().isEmpty() && tableViewBox.tableView.getItems().size() > 0) {
 				final int index = tableViewBox.tableView.getSelectionModel().getSelectedIndex();
 				tableViewBox.tableView.getItems().remove(index);
+
+				if (clickedRowIndex == tableViewBox.tableView.getSelectionModel().getSelectedIndex() + 1
+						&& formScrollPane.getContent() != null) {
+					formScrollPane.setContent(null);
+				}
 			/*
 			treeView.getRoot().getChildren().remove(index);
 			*/
@@ -148,6 +166,46 @@ public class MainController {
 		}
 	}
 
+	@FXML
+	public void onSaveButtonAction() {
+		final FileChooser fileChooser = new FileChooser();
 
+		//set title and initial directory
+		fileChooser.setTitle("enregistrer sous");
+		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+
+		//Set extension filter
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Fichier JSON (*.json)", "*.json");
+		fileChooser.getExtensionFilters().add(extFilter);
+
+		//Show save file dialog
+		File file = fileChooser.showSaveDialog(new Stage(StageStyle.DECORATED));
+
+		if (file != null) {
+			SaveTableViewService.save(file.getAbsolutePath(), tableViewBox.tableView.getItems());
+		}
+	}
+
+	@FXML
+	public void OnOpenButtonAction() {
+		List<RowAdapter> items;
+		final FileChooser fileChooser = new FileChooser();
+
+		//set title and initial directory
+		fileChooser.setTitle("ouvrir");
+		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+
+		//Set extension filter
+		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Fichier JSON (*.json)", "*.json");
+		fileChooser.getExtensionFilters().add(extFilter);
+
+		//Show save file dialog
+		File file = fileChooser.showOpenDialog(new Stage(StageStyle.DECORATED));
+
+		if (file != null) {
+			items = SaveTableViewService.open(file.getAbsolutePath());
+			tableViewBox.tableView.getItems().setAll(items);
+		}
+	}
 }
 

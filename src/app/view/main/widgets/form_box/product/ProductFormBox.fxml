@@ -7,6 +7,7 @@
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 
+<?import app.view.main.javafx.FloatTextField?>
 <fx:root type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1"
          prefHeight="300.0" prefWidth="400.0" spacing="10.0">
     <children>
@@ -14,7 +15,7 @@
             <children>
                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Étiquette :" underline="true"/>
                 <Text layoutX="10.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" "/>
-                <TextField id="product" fx:id="nameTextField" alignment="CENTER_RIGHT"
+                <TextField id="name" fx:id="nameTextField" alignment="CENTER_RIGHT"
                            promptText="nom du fichier"/>
             </children>
         </HBox>
@@ -33,7 +34,7 @@
         <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="36.0" prefWidth="400.0">
             <children>
                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Taille : "/>
-                <TextField id="size" fx:id="sizeTextField"/>
+                <FloatTextField id="size" fx:id="sizeTextField"/>
             </children>
         </HBox>
         <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="36.0" prefWidth="400.0">
@@ -45,13 +46,13 @@
         <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="62.0" prefWidth="400.0">
             <children>
                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Prix HT en € : "/>
-                <TextField id="priceWrite" fx:id="priceWriteTextField"/>
+                <FloatTextField id="priceWrite" fx:id="priceWriteTextField"/>
             </children>
         </HBox>
         <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="88.0" prefWidth="400.0">
             <children>
                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="TVA en % : "/>
-                <TextField id="tva" fx:id="tvaTextField"/>
+                <FloatTextField id="tva" fx:id="tvaTextField"/>
             </children>
         </HBox>
     </children>
