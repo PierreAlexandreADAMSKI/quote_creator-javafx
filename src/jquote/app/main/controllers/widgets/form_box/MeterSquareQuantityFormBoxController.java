@@ -38,7 +38,7 @@ public class MeterSquareQuantityFormBoxController extends Box {
 	private MainStageController controller;
 
 	public MeterSquareQuantityFormBoxController(MainStageController controller) {
-		super("main/controllers/form_box", "MeterSquareQuantityFormBox", controller);
+		super("form_box/", "MeterSquareQuantityFormBox", controller);
 		this.controller = controller;
 		initForForm(addSurfaceButton);
 

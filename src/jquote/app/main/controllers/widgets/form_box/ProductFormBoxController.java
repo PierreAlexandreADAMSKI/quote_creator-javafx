@@ -36,7 +36,7 @@ public class ProductFormBoxController extends Box {
 
 
 	public ProductFormBoxController(MainStageController controller) {
-		super("main/controllers/form_box","ProductFormBox", controller);
+		super("form_box/", "ProductFormBox", controller);
 		this.initForForm(controller.addButton);
 	}
 

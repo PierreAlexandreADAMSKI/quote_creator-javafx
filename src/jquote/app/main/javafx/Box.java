@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.net.URL;
 
 /**
  * app.view.main.widgets Created by Pierre-Alexandre Adamski on 14/04/2016.
@@ -18,8 +19,9 @@ public class Box extends VBox {
 
 	public Box(String prefix, String fxmlName, MainStageController controller) {
 		this.mController = controller;
-
-		FXMLLoader loader = new FXMLLoader(App.class.getResource(prefix + "/" + fxmlName + ".fxml"));
+		String file = "main/views/" + prefix + fxmlName + ".fxml";
+		URL fileURL = App.class.getResource(file); //this.getClass().getResource(file).;
+		FXMLLoader loader = new FXMLLoader(fileURL);
 		loader.setRoot(this);
 		loader.setController(this);
 		try {

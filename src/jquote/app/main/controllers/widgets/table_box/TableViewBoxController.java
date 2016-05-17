@@ -42,7 +42,7 @@ public class TableViewBoxController extends Box {
 
 
 	public TableViewBoxController(MainStageController controller) {
-		super("main/controllers/table_box", "TableViewBox", controller);
+		super("table_box/", "TableViewBox", controller);
 		this.mController = controller;
 
 		initTable();

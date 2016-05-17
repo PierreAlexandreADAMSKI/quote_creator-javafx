@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<?import javafx.geometry.Insets?>
-
 <?import jquote.app.main.javafx.FloatTextField?>
-<fx:root type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1"
+<fx:root type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1"
          prefHeight="300.0" prefWidth="400.0" spacing="10.0">
     <children>
         <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" prefWidth="400.0">
