@@ -4,29 +4,20 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
-<?import jquote.app.main.javafx.FloatTextField?>
+<?import app.main.javafx.FloatTextField?>
 <fx:root type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1"
          prefWidth="400.0" spacing="10.0">
     <children>
         <HBox alignment="CENTER_RIGHT">
             <children>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="linéaire sol : "/>
-                <FloatTextField fx:id="linearGroundTextField" alignment="CENTER_RIGHT"/>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="linéaire : "/>
+                <FloatTextField fx:id="linearTextField" alignment="CENTER_RIGHT"/>
             </children>
             <padding>
                 <Insets top="5.0"/>
             </padding>
         </HBox>
         <HBox alignment="CENTER_RIGHT">
-            <children>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="linéaire plafond : "/>
-                <FloatTextField fx:id="linearRoofTextField" alignment="CENTER_RIGHT"/>
-            </children>
-            <padding>
-                <Insets top="5.0"/>
-            </padding>
-        </HBox>
-        <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="51.0">
             <children>
                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="hauteur : "/>
                 <FloatTextField fx:id="heightTextField" alignment="CENTER_RIGHT"/>

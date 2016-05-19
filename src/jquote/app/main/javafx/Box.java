@@ -1,15 +1,11 @@
 package app.main.javafx;
 
-import app.main.controllers.MainStageController;
-import app.main.services.ReflectionService;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 
 import static app.main.services.ReflectionService.getResourceFromBox;
-
-
 /**
  * app.view.main.widgets Created by Pierre-Alexandre Adamski on 14/04/2016.
  */

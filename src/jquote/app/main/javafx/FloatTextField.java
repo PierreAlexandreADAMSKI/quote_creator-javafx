@@ -10,6 +10,5 @@ public class FloatTextField extends TextField{
 
 	public FloatTextField() {
 		this.setTextFormatter(new FloatFormatter());
-		//this.setOnKeyReleased();
 	}
 }

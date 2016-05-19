@@ -33,7 +33,6 @@ public class MainStageController {
 	public TableViewBoxController tableViewBoxController;
 
 	private MenuItem row = new MenuItem("ligne");
-
 	/**
 	 * Current <=> JustAdded
 	 */
@@ -55,6 +54,7 @@ public class MainStageController {
 
 		addButton.setDisable(true);
 		delButton.disableProperty().bind(Bindings.not(Bindings.size(tableViewBoxController.tableView.getItems()).greaterThan(0)));
+
 
 		row.setOnAction(event -> {
 			formScrollPane.setContent(null);
