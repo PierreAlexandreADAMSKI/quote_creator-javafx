@@ -1,4 +1,4 @@
-package jquote.app.main.services;
+package app.main.services;
 
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;

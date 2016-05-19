@@ -1,6 +1,6 @@
-package jquote.app.main.services;
+package app.main.services;
 
-import jquote.app.App;
+import app.App;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -16,9 +16,9 @@ import java.util.ResourceBundle;
 /**
  * Created by Pierre-Alexandre Adamski and Maroin Al Dandachi.
  */
-public class AppUtil {
+public interface AppUtil {
 
-	public static void showPrimary(URL url) { //create Exceptions!!!
+	static void showPrimary(URL url) { //create Exceptions!!!
 		try {
 			final FXMLLoader loader = new FXMLLoader(url);
 			final AnchorPane anchorPane = loader.load();
@@ -32,7 +32,7 @@ public class AppUtil {
 	}
 
 
-	public static void showStandAlone(URL url, StageStyle stageStyle) throws IOException {
+	static void showStandAlone(URL url, StageStyle stageStyle) throws IOException {
 		final FXMLLoader loader = new FXMLLoader(url);
 		final Scene scene = new Scene(loader.load());
 		StageService.addStandAloneStage(new Stage(stageStyle), url.getFile());
@@ -40,19 +40,17 @@ public class AppUtil {
 		StageService.getStandAloneStage(url.getFile()).show();
 	}
 
-	/** BUNDLE **/
 
-	public static Properties pathProperties;
-	public static ResourceBundle pathPropertyBundle;
 
 	//TODO if comes up to be necessary
-	public static void storeProperties(String key, Properties properties) {
+	static void storeProperties(String key, Properties properties) {
 		if (key == null) throw new NullPointerException("key cannot be NULL in HashTable<>");
 		if (properties == null) throw new NullPointerException("value cannot be NULL in HashTable<>");
 		//properties.store();
 	}
 
-	public static Properties loadProperties(String filePrefix) {
+	//TODO : found a better root path to call ClassLoader()
+	static Properties loadProperties(String filePrefix) {
 		System.out.println("[...] Loading " + filePrefix + ".properties");
 		Properties properties = new Properties();
 		String propertyPath = filePrefix+".properties";
@@ -65,7 +63,7 @@ public class AppUtil {
 		return properties;
 	}
 
-	public static ResourceBundle loadPropertyBundle(String filePrefix) {
+	static ResourceBundle loadPropertyBundle(String filePrefix) {
 		System.out.println("[...] Loading " + filePrefix + ".properties");
 		return ResourceBundle.getBundle(filePrefix + ".properties");
 	}

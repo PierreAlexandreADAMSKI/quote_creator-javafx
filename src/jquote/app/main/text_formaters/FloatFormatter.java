@@ -1,4 +1,4 @@
-package jquote.app.main.text_formaters;
+package app.main.text_formaters;
 
 import javafx.scene.control.TextFormatter;
 

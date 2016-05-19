@@ -1,15 +1,17 @@
-package jquote.app.main.controllers.widgets.form_box.polygon_area;
+package app.main.controllers.widgets.form_box.polygon_area;
 
-import jquote.app.main.controllers.MainStageController;
-import jquote.app.main.javafx.FloatTextField;
-import jquote.app.main.widgets_objects.impl.Polygon;
+import app.main.controllers.MainStageController;
+import app.main.javafx.Box;
+import app.main.javafx.FloatTextField;
+import app.main.widgets_objects.interfaces.Polygon;
+import app.main.widgets_objects.interfaces.PolygonAreaBox;
 import javafx.fxml.FXML;
-import jquote.app.main.widgets_objects.polygons.Triangle;
+import app.main.widgets_objects.polygons.Triangle;
 
 /**
  * app.view.main.widgets.form_box.quantities.polygones Created by Pierre-Alexandre Adamski on 16/04/2016.
  */
-public class TriangleAreaFormBoxController extends PolygonAreaBox {
+public class TriangleAreaFormBoxController extends Box implements PolygonAreaBox {
 	@FXML
 	public FloatTextField linearTextField;
 	@FXML
@@ -17,8 +19,8 @@ public class TriangleAreaFormBoxController extends PolygonAreaBox {
 
 	private Triangle polygon;
 
-	public TriangleAreaFormBoxController(MainStageController controller) {
-		super("TriangleAreaFormBox", controller);
+	public TriangleAreaFormBoxController() {
+		super("TriangleAreaFormBox");
 		polygon = new Triangle();
 
 	}

@@ -1,7 +1,8 @@
-package jquote.app.main.controllers.widgets.form_box;
+package app.main.controllers.widgets.form_box;
 
-import jquote.app.main.controllers.MainStageController;
-import jquote.app.main.javafx.Box;
+import app.main.controllers.MainStageController;
+import app.main.javafx.Box;
+import app.main.widgets_objects.interfaces.FormBox;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -12,7 +13,7 @@ import java.util.regex.Pattern;
 /**
  * app.view.main.widgets Created by Pierre-Alexandre Adamski on 04/04/2016.
  */
-public class ProductFormBoxController extends Box {
+public class ProductFormBoxController extends Box implements FormBox {
 	@FXML
 	public TextField nameTextField;
 	@FXML
@@ -35,28 +36,19 @@ public class ProductFormBoxController extends Box {
 	private MenuItem setMenuItem = new MenuItem("ENS");
 
 
-	public ProductFormBoxController(MainStageController controller) {
-		super("form_box/", "ProductFormBox", controller);
-		this.initForForm(controller.addButton);
+	public ProductFormBoxController() {
+		super("ProductFormBox");
+		init();
 	}
 
-	public void init() {
-		final Pattern wholeNumberPattern = Pattern.compile("[0-9]*[.]?[0-9]*");
+	private void init() {
+		unitMenuButton.getItems().setAll(unityMenuItem, meterMenuItem, meter2MenuItem, meter3MenuItem, setMenuItem);
+		unitMenuButton.getItems().stream().forEach(item ->
+				item.setOnAction(clickEvent ->
+						unitMenuButton.setText(item.getText())));
+	}
 
-		sizeTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-			if (!wholeNumberPattern.matcher(newValue).matches())
-				sizeTextField.setText(oldValue);
-		});
-		priceWriteTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-			if (!wholeNumberPattern.matcher(newValue).matches())
-				priceWriteTextField.setText(oldValue);
-		});
-		tvaTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-			if (!wholeNumberPattern.matcher(newValue).matches())
-				tvaTextField.setText(oldValue);
-		});
-
-		unitMenuButton.getItems().setAll(unityMenuItem,meterMenuItem,meter2MenuItem,meter3MenuItem,setMenuItem);
-		unitMenuButton.getItems().stream().forEach(item -> item.setOnAction(clickEvent -> unitMenuButton.setText(item.getText())));
+	@Override
+	protected void comportment() {
 	}
 }

@@ -1,4 +1,4 @@
-package jquote.app.main.adapters;
+package app.main.adapters;
 
 /**
  * app.view.main.adapters Created by Pierre-Alexandre Adamski on 15/05/2016.

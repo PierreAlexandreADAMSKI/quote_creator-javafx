@@ -1,6 +1,6 @@
-package jquote.app.main.widgets_objects.polygons;
+package app.main.widgets_objects.polygons;
 
-import jquote.app.main.widgets_objects.impl.Polygon;
+import app.main.widgets_objects.interfaces.Polygon;
 
 /**
  * app.view.main.widgets.form_box.quantities.polygones Created by Pierre-Alexandre Adamski on 16/04/2016.

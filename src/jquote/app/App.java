@@ -1,15 +1,12 @@
-package jquote.app;
+package app;
 
+import app.main.services.ReflectionService;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-import jquote.app.main.services.AppUtil;
-import jquote.app.main.services.StageService;
-
-import java.net.URL;
-import java.util.Properties;
-
-import static jquote.app.main.services.AppUtil.*;
+import app.main.services.StageService;
+import static app.main.services.AppUtil.*;
+import static app.main.services.ReflectionService.getResourceFromApp;
 
 /**
  * java Created by Pierre-Alexandre Adamski on 27/03/2016.
@@ -26,6 +23,6 @@ public class App extends Application{
 	public void start(Stage primaryStage) throws Exception { //create exceptions!!!
 		StageService.getInstance().setPrimaryStage(primaryStage);
 		StageService.getInstance().getPrimaryStage().setTitle("Home");
-		AppUtil.showPrimary(this.getClass().getResource("main/views/MainStage.fxml"));
+		showPrimary(getResourceFromApp("MainStage"));
 	}
 }

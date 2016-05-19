@@ -1,15 +1,17 @@
-package jquote.app.main.controllers.widgets.form_box.polygon_area;
+package app.main.controllers.widgets.form_box.polygon_area;
 
-import jquote.app.main.controllers.MainStageController;
-import jquote.app.main.javafx.FloatTextField;
-import jquote.app.main.widgets_objects.impl.Polygon;
+import app.main.controllers.MainStageController;
+import app.main.javafx.Box;
+import app.main.javafx.FloatTextField;
+import app.main.widgets_objects.interfaces.Polygon;
+import app.main.widgets_objects.interfaces.PolygonAreaBox;
 import javafx.fxml.FXML;
-import jquote.app.main.widgets_objects.polygons.Trapeze;
+import app.main.widgets_objects.polygons.Trapeze;
 
 /**
  * app.view.main.widgets.form_box.quantities.polygones Created by Pierre-Alexandre Adamski on 16/04/2016.
  */
-public class TrapezeAreaFormBoxController extends PolygonAreaBox {
+public class TrapezeAreaFormBoxController extends Box implements PolygonAreaBox {
 	@FXML
 	FloatTextField linearGroundTextField;
 	@FXML
@@ -19,8 +21,8 @@ public class TrapezeAreaFormBoxController extends PolygonAreaBox {
 
 	private Trapeze polygon;
 
-	public TrapezeAreaFormBoxController(MainStageController controller) {
-		super("TrapezeAreaFormBox", controller);
+	public TrapezeAreaFormBoxController() {
+		super("TrapezeAreaFormBox");
 		polygon = new Trapeze();
 	}
 

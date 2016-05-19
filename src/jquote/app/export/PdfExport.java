@@ -1,7 +1,7 @@
-package jquote.app.export;
+package app.export;
 
 /**
- * jquote.app.export Created by Pierre-Alexandre Adamski on 16/05/16.
+ * app.export Created by Pierre-Alexandre Adamski on 19/05/16.
  */
 public class PdfExport {
 }

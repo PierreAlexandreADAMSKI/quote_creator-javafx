@@ -1,8 +1,8 @@
-package jquote.app.main.javafx;
+package app.main.javafx;
 
-import jquote.app.main.controllers.MainStageController;
-import jquote.app.main.adapters.RowAdapter;
-import jquote.app.main.controllers.widgets.form_box.MeterSquareQuantityFormBoxController;
+import app.main.adapters.RowAdapter;
+import app.main.controllers.widgets.form_box.MeterSquareQuantityFormBoxController;
+import app.main.controllers.MainStageController;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.*;

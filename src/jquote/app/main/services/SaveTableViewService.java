@@ -1,7 +1,7 @@
-package jquote.app.main.services;
+package app.main.services;
 
-import jquote.app.main.adapters.JsonRowAdapter;
-import jquote.app.main.adapters.RowAdapter;
+import app.main.adapters.JsonRowAdapter;
+import app.main.adapters.RowAdapter;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 
@@ -14,11 +14,11 @@ import java.util.stream.Collectors;
 /**
  * app.service Created by Pierre-Alexandre Adamski on 15/05/2016.
  */
-public class SaveTableViewService {
+public interface SaveTableViewService {
 
 	//TODO I/O must run out of UI Thread -> found best way to get open() result !...
 
-	public static void save(String absolutePath, List<RowAdapter> items) {
+	static void save(String absolutePath, List<RowAdapter> items) {
 		Gson gson = new Gson();
 		List<JsonRowAdapter> jsonRowAdapterList = new ArrayList<>();
 		Type type = new TypeToken<List<JsonRowAdapter>>() {
@@ -37,7 +37,7 @@ public class SaveTableViewService {
 		}
 	}
 
-	public static List<RowAdapter> open(String absolutePath) {
+	static List<RowAdapter> open(String absolutePath) {
 
 		Gson gson = new Gson();
 		Type type = new TypeToken<List<JsonRowAdapter>>() {

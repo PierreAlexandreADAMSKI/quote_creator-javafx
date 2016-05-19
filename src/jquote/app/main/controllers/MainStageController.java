@@ -1,13 +1,16 @@
-package jquote.app.main.controllers;
+package app.main.controllers;
 
-import jquote.app.main.controllers.widgets.form_box.MeterSquareQuantityFormBoxController;
-import jquote.app.main.controllers.widgets.form_box.ProductFormBoxController;
-import jquote.app.main.controllers.widgets.table_box.TableViewBoxController;
-import jquote.app.main.services.SaveTableViewService;
-import jquote.app.main.adapters.RowAdapter;
-import jquote.app.main.javafx.QuantityTableCell;
+import app.main.controllers.widgets.form_box.MeterSquareQuantityFormBoxController;
+import app.main.controllers.widgets.form_box.ProductFormBoxController;
+import app.main.controllers.widgets.table_box.TableViewBoxController;
+import app.main.services.KeyEventService;
+import app.main.services.SaveTableViewService;
+import app.main.adapters.RowAdapter;
+import app.main.javafx.QuantityTableCell;
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -15,23 +18,19 @@ import javafx.stage.StageStyle;
 import java.io.File;
 import java.util.List;
 
+import static app.main.services.KeyEventService.shortCuts;
+
 /**
  * java.view Created by Pierre-Alexandre Adamski on 27/03/2016.
  */
 public class MainStageController {
-	@FXML
+	public AnchorPane rootPane;
 	public ScrollPane formScrollPane;
-	@FXML
 	public Button addButton;
-	@FXML
 	public Button delButton;
-	@FXML
 	public MenuButton newMenu;
-	@FXML
 	public ScrollPane tableScrollPane;
 	public TableViewBoxController tableViewBoxController;
-	@FXML
-	public Button saveButton;
 
 	private MenuItem row = new MenuItem("ligne");
 
@@ -50,17 +49,21 @@ public class MainStageController {
 
 	@FXML
 	private void initialize() {
-		addButton.setDisable(true);
-		row.setOnAction(event -> {
-			final ProductFormBoxController productFormBox = new ProductFormBoxController(this);
-			formScrollPane.setContent(null);
-			formScrollPane.setContent(productFormBox);
-			productFormBox.init();
-		});
-		newMenu.getItems().setAll(row);
 
 		tableViewBoxController = new TableViewBoxController(this);
 		tableScrollPane.setContent(tableViewBoxController);
+
+		addButton.setDisable(true);
+		delButton.disableProperty().bind(Bindings.not(Bindings.size(tableViewBoxController.tableView.getItems()).greaterThan(0)));
+
+		row.setOnAction(event -> {
+			formScrollPane.setContent(null);
+			formScrollPane.setContent(new ProductFormBoxController());
+		});
+		newMenu.getItems().setAll(row);
+
+		//TODO listen if a form is filled and activate/desactivate addbutton !!
+		rootPane.setOnKeyReleased(event -> shortCuts(event,this));
 	}
 
 	public RowAdapter getCurrentRowAdapter() {
@@ -106,6 +109,7 @@ public class MainStageController {
 				Float.valueOf(productFormBoxController.priceWriteTextField.getText()));
 	}
 
+	@org.jetbrains.annotations.Nullable
 	private MeterSquareQuantityFormBoxController quantityAdapterForTableView() {
 		final MeterSquareQuantityFormBoxController meterSquareQuantityFormBoxController = (MeterSquareQuantityFormBoxController) formScrollPane.getContent();
 		//some quantity service
@@ -115,8 +119,8 @@ public class MainStageController {
 
 
 	/**
-	 * TODO unités : U->unité, m3->mètre cube, ens->ensemble
-	 * TODO pouvoir calculer des surfaces sur polygone N cotés (N est choisi par l'utilisateur ouvec ou non la formule.
+	 * TODO :: unités : U->unité, m3->mètre cube, ens->ensemble
+	 * TODO :: pouvoir calculer des surfaces sur polygone N cotés (N est choisi par l'utilisateur ouvec ou non la formule.
 	 */
 
 	@FXML
@@ -125,11 +129,8 @@ public class MainStageController {
 		if (formScrollPane.getContent() instanceof ProductFormBoxController) {
 			this.setCurrentRowAdapter(productAdapterForTableView());
 			tableViewBoxController.tableView.getItems().add(this.getCurrentRowAdapter());
-			//((TableViewBoxController) tableScrollPane.getContent()).tableView.getItems().add(productAdapterForTableView());
 		} else if (formScrollPane.getContent() instanceof MeterSquareQuantityFormBoxController) {
-			//rowAdapter.setQuantity(999.9f);
-			final Float quantity = getClickedRowAdapter().getQuantity();
-			getClickedRowAdapter().setPriceGen(getClickedRowAdapter().getPriceGen() * quantity);
+			clickedRowAdapter.setPriceGen(clickedRowAdapter.getPriceGen() * clickedRowAdapter.getQuantity());
 		}
 		formScrollPane.setContent(null);
 

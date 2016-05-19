@@ -1,16 +1,16 @@
-package jquote.app.main.controllers.widgets.table_box;
+package app.main.controllers.widgets.table_box;
 
-import jquote.app.main.adapters.RowAdapter;
-import jquote.app.main.controllers.MainStageController;
-import jquote.app.main.controllers.widgets.form_box.ProductFormBoxController;
-import jquote.app.main.javafx.Box;
+import app.main.adapters.RowAdapter;
+import app.main.controllers.MainStageController;
+import app.main.controllers.widgets.form_box.ProductFormBoxController;
+import app.main.javafx.Box;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
-import jquote.app.main.javafx.QuantityTableCell;
+import app.main.javafx.QuantityTableCell;
 
 /**
  * app.view.main.widgets.table_box Created by Pierre-Alexandre Adamski on 14/04/2016.
@@ -42,11 +42,10 @@ public class TableViewBoxController extends Box {
 
 
 	public TableViewBoxController(MainStageController controller) {
-		super("table_box/", "TableViewBox", controller);
+		super("TableViewBox");
 		this.mController = controller;
 
 		initTable();
-		initEvents();
 	}
 
 	private void initTable() {
@@ -64,40 +63,7 @@ public class TableViewBoxController extends Box {
 		quantityCol.setCellFactory(factory -> new QuantityTableCell(this.mController));
 	}
 
-	private void initEvents(){
-		this.mController.delButton.disableProperty().bind(
-				Bindings.not(Bindings.size(tableView.getItems()).greaterThan(0)));
-
-		//TODO CUSTOM EVENT CLASS -> <Class>KeyEventHandler<Class/>
-		this.setOnKeyReleased(event -> {
-			if (event.isControlDown()) {
-				switch (event.getCode()) {
-					case N: {
-						final ProductFormBoxController productFormBox = new ProductFormBoxController(this.mController);
-						this.mController.formScrollPane.setContent(productFormBox);
-						productFormBox.init();
-						break;
-					}
-					/* BUG
-					case D: {
-						if (!tableView.getItems().isEmpty()) {
-							final RowAdapter temp = tableView.getSelectionModel().getSelectedItem();
-							tableView.getItems().add(temp);
-						}
-						break;
-					}
-					*/
-					default:
-						break;
-				}
-			} else {
-				switch (event.getCode()) {
-					case BACK_SPACE: {
-						this.mController.onDelButtonAction();
-						break;
-					}
-				}
-			}
-		});
+	@Override
+	protected void comportment() {
 	}
 }

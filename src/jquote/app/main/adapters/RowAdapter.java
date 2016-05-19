@@ -1,4 +1,4 @@
-package jquote.app.main.adapters;
+package app.main.adapters;
 
 import javafx.beans.property.*;
 

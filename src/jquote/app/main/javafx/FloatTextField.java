@@ -1,6 +1,6 @@
-package jquote.app.main.javafx;
+package app.main.javafx;
 
-import jquote.app.main.text_formaters.FloatFormatter;
+import app.main.text_formaters.FloatFormatter;
 import javafx.scene.control.TextField;
 
 /**
