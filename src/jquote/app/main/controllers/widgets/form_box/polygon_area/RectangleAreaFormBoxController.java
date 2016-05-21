@@ -29,7 +29,7 @@ public class RectangleAreaFormBoxController extends Box implements PolygonAreaBo
 	}
 
 	@Override
-	protected void comportment() {
+	protected void comportment(MainStageController controller) {
 		heightTextField.setOnKeyReleased(event -> {
 			if (!heightTextField.getText().equals("") && heightTextField != null){
 				polygon.setHeight(Float.valueOf(heightTextField.getText()));

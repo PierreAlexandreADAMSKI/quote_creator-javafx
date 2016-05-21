@@ -14,7 +14,7 @@ public interface KeyEventService {
 		if (event.isControlDown()) {
 			switch (event.getCode()) {
 				case N: {
-					controller.formScrollPane.setContent(new ProductFormBoxController());
+					controller.formScrollPane.setContent(new ProductFormBoxController(controller));
 					break;
 				}
 				//TODO :: ControlDown Key shortcut at least :

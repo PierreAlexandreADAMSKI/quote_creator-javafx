@@ -2,6 +2,8 @@ package app.main.adapters;
 
 import javafx.beans.property.*;
 
+import java.util.HashMap;
+
 /**
  * app.quore Created by Pierre-Alexandre Adamski on 01/04/2016.
  */
@@ -19,16 +21,16 @@ public class RowAdapter {
 
 
 	public RowAdapter() {
-		setName("untitled");
-		setProduct("empty");
-		setSeller("empty");
-		setSize(0f);
-		setUnit("empty");
-		setTva(0f);
-		setPriceWrite(0f);
-		setPriceGen(0f);
+		//setName("");
+		//setProduct("");
+		//setSeller("");
+		//setSize(0f);
+		setUnit("...");
+		//setTva(0f);
+		//setPriceWrite(0f);
+		//setPriceGen(0f);
 		setSel(false);
-		setQuantity(0f);
+		//setQuantity(0f);
 	}
 
 	public RowAdapter(String name, String product, String seller, Float size, String unit, Float tva, Float priceWrite) {
@@ -39,7 +41,7 @@ public class RowAdapter {
 		setUnit(unit);
 		setTva(tva);
 		setPriceWrite(priceWrite);
-		setPriceGen(priceWrite + (priceWrite * tva / 100f));
+		setPriceGen(priceWrite, tva);
 		setSel(false);
 		setQuantity(0f);
 	}
@@ -61,6 +63,9 @@ public class RowAdapter {
 		nameProperty().set(name);
 	}
 
+	public void setPriceGen(Float priceWrite, Float tva) {
+		priceGenProperty().set(priceWrite + (priceWrite * tva / 100f));
+	}
 	public void setPriceGen(Float priceGen) {
 		priceGenProperty().set(priceGen);
 	}
@@ -74,7 +79,8 @@ public class RowAdapter {
 	}
 
 	public void setSel(boolean sel) {
-		selProperty().set(sel);}
+		selProperty().set(sel);
+	}
 
 	public void setSeller(String seller) {
 		sellerProperty().set(seller);
@@ -95,10 +101,6 @@ public class RowAdapter {
 	public void setTva(Float tva) {
 		tvaProperty().set(tva);
 	}
-
-	/*public void setQuantity(Float quantity) {
-		quantityProperty().set(quantity);
-	}*/
 
 	public String getName() {
 		return nameProperty().get();
@@ -128,7 +130,9 @@ public class RowAdapter {
 		return sizeProperty().get();
 	}
 
-	public String getUnit() { return unitProperty().get(); }
+	public String getUnit() {
+		return unitProperty().get();
+	}
 
 	public Float getQuantity() {
 		return quantityProperty().get();
@@ -163,7 +167,7 @@ public class RowAdapter {
 		return size;
 	}
 
-	private StringProperty unitProperty() {
+	public StringProperty unitProperty() {
 		if (unit == null) unit = new SimpleStringProperty(this, "unit");
 		return unit;
 	}

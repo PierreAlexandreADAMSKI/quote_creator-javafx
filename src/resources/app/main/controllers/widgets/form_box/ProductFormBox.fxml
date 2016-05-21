@@ -20,19 +20,19 @@
         <HBox alignment="CENTER_RIGHT" prefWidth="400.0">
             <children>
                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Produit : "/>
-                <TextField id="product" fx:id="productTextField"/>
+                <TextField id="product" fx:id="productTextField" promptText="empty"/>
             </children>
         </HBox>
         <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" prefWidth="400.0">
             <children>
                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Revendeur : "/>
-                <TextField id="seller" fx:id="sellerTextField"/>
+                <TextField id="seller" fx:id="sellerTextField" promptText="empty"/>
             </children>
         </HBox>
         <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="36.0" prefWidth="400.0">
             <children>
                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Taille : "/>
-                <FloatTextField id="size" fx:id="sizeTextField"/>
+                <FloatTextField id="size" fx:id="sizeTextField" promptText="empty"/>
             </children>
         </HBox>
         <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="36.0" prefWidth="400.0">
@@ -44,13 +44,13 @@
         <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="62.0" prefWidth="400.0">
             <children>
                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Prix HT en € : "/>
-                <FloatTextField id="priceWrite" fx:id="priceWriteTextField"/>
+                <FloatTextField id="priceWrite" fx:id="priceWriteTextField" promptText="empty"/>
             </children>
         </HBox>
         <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="88.0" prefWidth="400.0">
             <children>
                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="TVA en % : "/>
-                <FloatTextField id="tva" fx:id="tvaTextField"/>
+                <FloatTextField id="tva" fx:id="tvaTextField" promptText="empty"/>
             </children>
         </HBox>
     </children>

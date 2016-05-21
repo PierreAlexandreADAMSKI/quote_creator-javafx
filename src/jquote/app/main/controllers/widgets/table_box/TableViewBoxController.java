@@ -2,9 +2,7 @@ package app.main.controllers.widgets.table_box;
 
 import app.main.adapters.RowAdapter;
 import app.main.controllers.MainStageController;
-import app.main.controllers.widgets.form_box.ProductFormBoxController;
-import app.main.javafx.Box;
-import javafx.beans.binding.Bindings;
+import app.main.javafx.ParentBox;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -15,10 +13,7 @@ import app.main.javafx.QuantityTableCell;
 /**
  * app.view.main.widgets.table_box Created by Pierre-Alexandre Adamski on 14/04/2016.
  */
-public class TableViewBoxController extends Box {
-
-
-	private MainStageController mController;
+public class TableViewBoxController extends ParentBox{
 	@FXML
 	public TableView<RowAdapter> tableView;
 	@FXML
@@ -42,13 +37,12 @@ public class TableViewBoxController extends Box {
 
 
 	public TableViewBoxController(MainStageController controller) {
-		super("TableViewBox");
-		this.mController = controller;
-
-		initTable();
+		super("TableViewBox", controller);
 	}
 
-	private void initTable() {
+
+	@Override
+	protected void comportment(MainStageController controller) {
 		productCol.setCellValueFactory(new PropertyValueFactory<>("product"));
 		sellerCol.setCellValueFactory(new PropertyValueFactory<>("seller"));
 		sizeCol.setCellValueFactory(new PropertyValueFactory<>("size"));
@@ -60,10 +54,7 @@ public class TableViewBoxController extends Box {
 		selCol.setCellFactory(CheckBoxTableCell.forTableColumn(selCol));
 		selCol.setEditable(true);
 		quantityCol.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-		quantityCol.setCellFactory(factory -> new QuantityTableCell(this.mController));
+		quantityCol.setCellFactory(factory -> new QuantityTableCell(controller));
 	}
 
-	@Override
-	protected void comportment() {
-	}
 }

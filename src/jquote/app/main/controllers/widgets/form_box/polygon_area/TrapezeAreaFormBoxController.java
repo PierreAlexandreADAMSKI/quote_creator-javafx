@@ -32,7 +32,7 @@ public class TrapezeAreaFormBoxController extends Box implements PolygonAreaBox 
 	}
 
 	@Override
-	protected void comportment() {
+	protected void comportment(MainStageController controller) {
 		linearGroundTextField.setOnKeyReleased(event -> {
 			if (!linearGroundTextField.getText().equals("") && linearGroundTextField != null){
 				polygon.setBottomBase(Float.valueOf(linearGroundTextField.getText()));

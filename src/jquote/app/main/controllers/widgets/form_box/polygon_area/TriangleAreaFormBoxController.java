@@ -31,7 +31,7 @@ public class TriangleAreaFormBoxController extends Box implements PolygonAreaBox
 	}
 
 	@Override
-	protected void comportment() {
+	protected void comportment(MainStageController controller) {
 		heightTextField.setOnKeyReleased(event -> {
 			if (!heightTextField.getText().equals("") && heightTextField != null){
 				polygon.setHeight(Float.valueOf(heightTextField.getText()));

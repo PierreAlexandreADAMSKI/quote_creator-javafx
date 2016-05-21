@@ -2,10 +2,12 @@ package app.main.controllers.widgets.form_box;
 
 import app.main.controllers.MainStageController;
 import app.main.controllers.widgets.form_box.polygon_area.*;
-import app.main.widgets_objects.interfaces.FormBox;
+import app.main.javafx.FormBox;
+import app.main.services.FormService;
+import app.main.javafx.ParentBox;
 import app.main.widgets_objects.interfaces.PolygonAreaBox;
-import app.main.javafx.Box;
 import app.main.widgets_objects.interfaces.Polygon;
+import javafx.beans.binding.BooleanBinding;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -13,7 +15,7 @@ import javafx.scene.layout.HBox;
 /**
  * app.view.main.widgets Created by Pierre-Alexandre Adamski on 14/04/2016.
  */
-public class MeterSquareQuantityFormBoxController extends Box implements FormBox {
+public class MeterSquareQuantityFormBoxController extends FormBox {
 	private Polygon polygon;
 	@FXML
 	public MenuButton menuButton;
@@ -39,7 +41,7 @@ public class MeterSquareQuantityFormBoxController extends Box implements FormBox
 	private MainStageController controller;
 
 	public MeterSquareQuantityFormBoxController(MainStageController controller) {
-		super("MeterSquareQuantityFormBox");
+		super("MeterSquareQuantityFormBox", controller);
 		this.controller = controller;
 	}
 
@@ -49,14 +51,26 @@ public class MeterSquareQuantityFormBoxController extends Box implements FormBox
 		this.controller.getClickedRowAdapter().setQuantity(this.controller.getClickedRowAdapter().getQuantity() + area);
 	}
 
-	private void delArear(int index) {
+	private void delArea(int index) {
 		Float area = surfaceListView.getItems().get(index);
 		surfaceListView.getItems().remove(index);
 		this.controller.getClickedRowAdapter().setQuantity(this.controller.getClickedRowAdapter().getQuantity() - area);
 	}
 
 	@Override
-	protected void comportment() {
+	protected void comportment(MainStageController controller) {
+		BooleanBinding isFilled = new BooleanBinding() {
+			{
+				bind(FormService.isFilled(MeterSquareQuantityFormBoxController.this));
+			}
+			@Override
+			protected boolean computeValue() {
+				return !FormService.isFilled(MeterSquareQuantityFormBoxController.this).get();
+			}
+		};
+		controller.addButton.disableProperty().unbind();
+		controller.addButton.disableProperty().bind(isFilled);
+
 		addSurfaceButton.setOnAction(event -> {
 			controller.addButton.setDisable(false);
 			if (polygonBox.getChildren().get(0) instanceof PolygonAreaBox) {
@@ -75,7 +89,7 @@ public class MeterSquareQuantityFormBoxController extends Box implements FormBox
 			else controller.addButton.setDisable(false);
 			if (!surfaceListView.getItems().isEmpty() && surfaceListView.getItems().size() > 0) {
 				final int index = surfaceListView.getSelectionModel().getSelectedIndex();
-				delArear(index);
+				delArea(index);
 			}
 		});
 		triangleItem.setOnAction(event -> {

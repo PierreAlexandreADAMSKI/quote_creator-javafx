@@ -1,9 +1,8 @@
 package app.main.javafx;
 
+import app.main.controllers.MainStageController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.VBox;
-
-import java.io.IOException;
 
 import static app.main.services.ReflectionService.getResourceFromBox;
 /**
@@ -16,10 +15,9 @@ public abstract class Box extends VBox {
 		loader.setController(this);
 		try {
 			loader.load();
-			comportment();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	protected abstract void comportment();
+	protected abstract void comportment(MainStageController controller);
 }

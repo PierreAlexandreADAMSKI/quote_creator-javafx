@@ -3,7 +3,6 @@ package app.main.controllers;
 import app.main.controllers.widgets.form_box.MeterSquareQuantityFormBoxController;
 import app.main.controllers.widgets.form_box.ProductFormBoxController;
 import app.main.controllers.widgets.table_box.TableViewBoxController;
-import app.main.services.KeyEventService;
 import app.main.services.SaveTableViewService;
 import app.main.adapters.RowAdapter;
 import app.main.javafx.QuantityTableCell;
@@ -23,7 +22,7 @@ import static app.main.services.KeyEventService.shortCuts;
 /**
  * java.view Created by Pierre-Alexandre Adamski on 27/03/2016.
  */
-public class MainStageController {
+public final class MainStageController {
 	public AnchorPane rootPane;
 	public ScrollPane formScrollPane;
 	public Button addButton;
@@ -45,26 +44,6 @@ public class MainStageController {
 	private QuantityTableCell clickedCell;
 	private int clickedRowIndex;
 
-
-	@FXML
-	private void initialize() {
-
-		tableViewBoxController = new TableViewBoxController(this);
-		tableScrollPane.setContent(tableViewBoxController);
-
-		addButton.setDisable(true);
-		delButton.disableProperty().bind(Bindings.not(Bindings.size(tableViewBoxController.tableView.getItems()).greaterThan(0)));
-
-
-		row.setOnAction(event -> {
-			formScrollPane.setContent(null);
-			formScrollPane.setContent(new ProductFormBoxController());
-		});
-		newMenu.getItems().setAll(row);
-
-		//TODO listen if a form is filled and activate/desactivate addbutton !!
-		rootPane.setOnKeyReleased(event -> shortCuts(event,this));
-	}
 
 	public RowAdapter getCurrentRowAdapter() {
 		return currentRowAdapter;
@@ -98,23 +77,25 @@ public class MainStageController {
 		this.clickedCell = clickedCell;
 	}
 
-	private RowAdapter productAdapterForTableView() {
-		final ProductFormBoxController productFormBoxController = (ProductFormBoxController) formScrollPane.getContent();
-		return new RowAdapter(productFormBoxController.nameTextField.getText(),
-				productFormBoxController.productTextField.getText(),
-				productFormBoxController.sellerTextField.getText(),
-				Float.valueOf(productFormBoxController.sizeTextField.getText()),
-				productFormBoxController.unitMenuButton.getText(),
-				Float.valueOf(productFormBoxController.tvaTextField.getText()),
-				Float.valueOf(productFormBoxController.priceWriteTextField.getText()));
-	}
+	@FXML
+	private void initialize() {
 
-	@org.jetbrains.annotations.Nullable
-	private MeterSquareQuantityFormBoxController quantityAdapterForTableView() {
-		final MeterSquareQuantityFormBoxController meterSquareQuantityFormBoxController = (MeterSquareQuantityFormBoxController) formScrollPane.getContent();
-		//some quantity service
-		//entry.setQuantity(meterSquareQuantityFormBoxController.getQuantity());
-		return null;
+		tableViewBoxController = new TableViewBoxController(this);
+		tableScrollPane.setContent(tableViewBoxController);
+
+		addButton.setDisable(false);
+
+		delButton.disableProperty().bind(Bindings.not(Bindings.size(tableViewBoxController.tableView.getItems()).greaterThan(0)));
+
+
+		row.setOnAction(event -> {
+			formScrollPane.setContent(null);
+			formScrollPane.setContent(new ProductFormBoxController(this));
+		});
+		newMenu.getItems().setAll(row);
+
+		//TODO listen if a form is filled and activate/desactivate addbutton !!
+		rootPane.setOnKeyReleased(event -> shortCuts(event,this));
 	}
 
 
@@ -127,16 +108,14 @@ public class MainStageController {
 	public void onAddButtonAction() {
 
 		if (formScrollPane.getContent() instanceof ProductFormBoxController) {
-			this.setCurrentRowAdapter(productAdapterForTableView());
-			tableViewBoxController.tableView.getItems().add(this.getCurrentRowAdapter());
+			tableViewBoxController.tableView.getItems().add(currentRowAdapter);
+			currentRowAdapter.setPriceGen(currentRowAdapter.getPriceWrite(), currentRowAdapter.getTva());
 		} else if (formScrollPane.getContent() instanceof MeterSquareQuantityFormBoxController) {
 			clickedRowAdapter.setPriceGen(clickedRowAdapter.getPriceGen() * clickedRowAdapter.getQuantity());
 		}
 		formScrollPane.setContent(null);
 
 		//TODO get the project name -> create a project system
-
-		addButton.setDisable(true);
 	}
 
 	@FXML

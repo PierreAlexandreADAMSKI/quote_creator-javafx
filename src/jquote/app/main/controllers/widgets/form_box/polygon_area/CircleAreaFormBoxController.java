@@ -28,7 +28,7 @@ public class CircleAreaFormBoxController extends Box implements PolygonAreaBox {
 	}
 
 	@Override
-	protected void comportment() {
+	protected void comportment(MainStageController controller) {
 		radiusTextField.setOnKeyReleased(event -> {
 			if (!radiusTextField.getText().equals("") && radiusTextField != null){
 				polygon.setRadius(Float.valueOf(radiusTextField.getText()));

@@ -7,6 +7,7 @@ import app.main.widgets_objects.interfaces.Polygon;
 import app.main.widgets_objects.interfaces.PolygonAreaBox;
 import javafx.fxml.FXML;
 import app.main.widgets_objects.polygons.Arc;
+import sun.applet.Main;
 
 /**
  * app.view.main.widgets.form_box.quantities.polygones Created by Pierre-Alexandre Adamski on 16/04/2016.
@@ -30,7 +31,7 @@ public class ArcAreaFormBoxController extends Box implements PolygonAreaBox {
 	}
 
 	@Override
-	protected void comportment() {
+	protected void comportment(MainStageController controller) {
 		radiusTextField.setOnKeyReleased(event -> {
 			if (!radiusTextField.getText().equals("") && radiusTextField != null){
 				polygon.setRadius(Float.valueOf(radiusTextField.getText()));

@@ -33,7 +33,7 @@ public class JsonRowAdapter {
 	}
 
 	public Float getPriceGen() {
-		return priceGen;
+		return priceWrite + (priceWrite * tva / 100f);
 	}
 
 	public Float getPriceWrite() {
