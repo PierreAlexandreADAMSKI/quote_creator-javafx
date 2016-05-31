@@ -1,0 +1,20 @@
+#table_box .table-column {
+    -fx-alignment: CENTER;
+}
+
+#table_box_quatity_button .button {
+    -fx-padding: 10%;
+}
+
+#polygone_type_menu_button .menu-item {
+    -fx-alignment: RIGHT;
+}
+
+.list-cell {
+    -fx-border-color: #303030;
+}
+
+.cell_stamp {
+    -fx-text-fill: #303030;
+    -fx-font-weight: bold;
+}

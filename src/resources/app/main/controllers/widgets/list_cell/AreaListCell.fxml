@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<fx:root type="app.main.controllers.widgets.list_cell.AreaListCellController" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1"
+        prefWidth="310">
+    <children>
+        <GridPane>
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="60.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="180.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <children>
+                <Label fx:id="formulaLabel" text="(formula)" textFill="#4d4747" GridPane.columnIndex="2" GridPane.halignment="LEFT">
+                    <font>
+                        <Font name="Tahoma" size="13.0"/>
+                    </font>
+                </Label>
+                <Label fx:id="typeLabel" text="type " textFill="#4d4747" GridPane.columnIndex="1" GridPane.halignment="LEFT">
+                    <font>
+                        <Font name="Tahoma" size="13.0"/>
+                    </font>
+                </Label>
+                <Label fx:id="areaLabel" alignment="CENTER" text="area" GridPane.columnIndex="1" GridPane.columnSpan="2"
+                       GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                    <font>
+                        <Font name="Tahoma Bold" size="13.0"/>
+                    </font>
+                </Label>
+                <Label fx:id="stampLabel" alignment="CENTER" text="sans titre " underline="true" GridPane.halignment="LEFT"
+                       GridPane.rowSpan="2">
+                    <font>
+                        <Font name="Times Italic" size="13.0"/>
+                    </font>
+                </Label>
+            </children>
+            <VBox.margin>
+                <Insets left="2.0"/>
+            </VBox.margin>
+        </GridPane>
+    </children>
+</fx:root>

@@ -15,7 +15,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
-
+    <!-- http://mvnrepository.com/artifact/org.javafxdata/datafx-core<-->
     <dependencies>
         <dependency>
             <groupId>org.javafxdata</groupId>
@@ -24,6 +24,7 @@
             <type>jar</type>
         </dependency>
 
+        <!-- http://mvnrepository.com/artifact/com.itextpdf/itextpdf-->
         <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>itextpdf</artifactId>
@@ -36,10 +37,20 @@
             <artifactId>gson</artifactId>
             <version>2.6.2</version>
         </dependency>
+
+        <!-- http://mvnrepository.com/artifact/org.org.jetbrains/annotations -->
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
             <version>15.0</version>
         </dependency>
+
+        <!-- http://mvnrepository.com/artifact/org.controlsfx/controlsfx -->
+        <dependency>
+            <groupId>org.controlsfx</groupId>
+            <artifactId>controlsfx</artifactId>
+            <version>8.40.10</version>
+        </dependency>
+
     </dependencies>
 </project>

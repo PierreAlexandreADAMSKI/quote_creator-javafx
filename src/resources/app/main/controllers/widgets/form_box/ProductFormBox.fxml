@@ -6,14 +6,15 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <?import app.main.javafx.FloatTextField?>
-<fx:root type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1"
+
+<fx:root type="app.main.controllers.widgets.form_box.ProductFormBoxController" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1"
          prefHeight="300.0" prefWidth="400.0" spacing="10.0">
     <children>
         <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" prefWidth="400.0">
             <children>
                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Étiquette :" underline="true"/>
                 <Text layoutX="10.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" "/>
-                <TextField id="name" fx:id="nameTextField" alignment="CENTER_RIGHT"
+                <TextField id="stamp" fx:id="nameTextField" alignment="CENTER_RIGHT"
                            promptText="nom du fichier"/>
             </children>
         </HBox>

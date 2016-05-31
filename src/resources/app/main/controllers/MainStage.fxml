@@ -15,12 +15,12 @@
                                 <Tooltip text="nouvel élément"/>
                             </tooltip>
                         </MenuButton>
-                        <Button layoutX="10.0" layoutY="11.0" mnemonicParsing="false" text="Ouvrir" onAction="#OnOpenButtonAction">
+                        <Button fx:id="openButton" layoutX="10.0" layoutY="11.0" mnemonicParsing="false" text="Ouvrir" onAction="#OnOpenButtonAction">
                             <tooltip>
                                 <Tooltip text="ouvrir un nouveau projet"/>
                             </tooltip>
                         </Button>
-                        <Button layoutX="59.0" layoutY="11.0" mnemonicParsing="false"
+                        <Button fx:id="saveButton" layoutX="59.0" layoutY="11.0" mnemonicParsing="false"
                                 text="Enregister" onAction="#onSaveButtonAction">
                             <tooltip>
                                 <Tooltip text="enregistrer le projet"/>

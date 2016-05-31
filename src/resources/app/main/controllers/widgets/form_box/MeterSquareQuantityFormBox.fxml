@@ -4,7 +4,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
-<fx:root type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1"
+<?import app.main.javafx.FormBox?>
+<?import app.main.javafx.impl.Box?>
+<?import app.main.javafx.FloatTextField?>
+
+<fx:root type="app.main.controllers.widgets.form_box.MeterSquareQuantityFormBoxController" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1"
          prefHeight="300.0" prefWidth="400.0" spacing="10.0">
     <children>
         <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" prefWidth="400.0">
@@ -20,16 +24,16 @@
                 <MenuButton fx:id="menuButton" mnemonicParsing="false" prefWidth="163.0" text="..."
                             textAlignment="RIGHT">
                     <items>
-                        <MenuItem fx:id="triangleItem"  mnemonicParsing="false" text="Triangle △"/>
-                        <MenuItem fx:id="rectangleItem" mnemonicParsing="false" text="Rectangle ⃞"/>
-                        <MenuItem fx:id="trapezeItem"   mnemonicParsing="false" text="Trapèze ⏢"/>
-                        <MenuItem fx:id="circleItem"    mnemonicParsing="false" text="Cercle   ⃝"/>
-                        <MenuItem fx:id="arcItem"       mnemonicParsing="false" text="Arc ⌒"/>
+                        <MenuItem id="triangle" fx:id="triangleItem" mnemonicParsing="false" text="Triangle △"/>
+                        <MenuItem id="rectangle" fx:id="rectangleItem" mnemonicParsing="false" text="Rectangle ⃞"/>
+                        <MenuItem id="trapeze" fx:id="trapezeItem" mnemonicParsing="false" text="Trapèze ⏢"/>
+                        <MenuItem id="circle" fx:id="circleItem" mnemonicParsing="false" text="Cercle   ⃝"/>
+                        <MenuItem id="arc" fx:id="arcItem" mnemonicParsing="false" text="Arc ⌒"/>
                     </items>
                 </MenuButton>
             </children>
         </HBox>
-        <HBox fx:id="polygonBox" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="36.0" prefWidth="400.0"/>
+        <HBox fx:id="hBox" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="36.0" prefWidth="400.0"/>
         <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="114.0" prefWidth="400.0">
             <children>
                 <VBox prefHeight="324.0" prefWidth="400.0">
@@ -42,8 +46,14 @@
                                         <Tooltip text="ajouter une surface"/>
                                     </tooltip>
                                 </Button>
-                                <Button fx:id="delSurfaceButton" mnemonicParsing="false" prefHeight="26.0"
+                                <Button fx:id="subSurfaceButton" mnemonicParsing="false" prefHeight="26.0"
                                         prefWidth="26.0" text="-">
+                                    <tooltip>
+                                        <Tooltip text="supprimer une surface"/>
+                                    </tooltip>
+                                </Button>
+                                <Button fx:id="delSurfaceButton" mnemonicParsing="false" prefHeight="26.0"
+                                        text="suppr">
                                     <tooltip>
                                         <Tooltip text="supprimer une surface"/>
                                     </tooltip>
@@ -54,7 +64,7 @@
                         </ToolBar>
                         <ScrollPane prefHeight="280.0" prefWidth="370.0" minHeight="280.0" minWidth="370.0">
                             <content>
-                                <ListView fx:id="surfaceListView"  prefHeight="280.0"
+                                <ListView fx:id="surfaceListView" prefHeight="280.0"
                                           prefWidth="340.0" minHeight="280.0" minWidth="340.0"/>
                             </content>
                         </ScrollPane>
