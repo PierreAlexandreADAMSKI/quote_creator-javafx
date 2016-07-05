@@ -14,6 +14,7 @@ public class JsonRowAdapter {
 	private String unit;
 	private Float priceWrite;
 	private Float tva;
+	private Float tvaPriceWrite;
 	private Float priceGen;
 	private Float quantity;
 
@@ -27,6 +28,7 @@ public class JsonRowAdapter {
 		this.seller = tableRowAdapter.getSeller();
 		this.size = tableRowAdapter.getSize();
 		this.tva = tableRowAdapter.getTva();
+		this.tvaPriceWrite = tableRowAdapter.getTvaPriceWrite();
 		this.unit = tableRowAdapter.getUnit();
 	}
 
@@ -64,6 +66,10 @@ public class JsonRowAdapter {
 
 	public Float getTva() {
 		return tva;
+	}
+
+	public Float getTvaPriceWrite() {
+		return tvaPriceWrite;
 	}
 
 	public String getUnit() {

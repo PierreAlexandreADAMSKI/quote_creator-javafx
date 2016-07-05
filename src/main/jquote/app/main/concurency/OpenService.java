@@ -13,6 +13,7 @@ import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * app.main.concurencies Created by Pierre-Alexandre Adamski on 26/05/16.
@@ -37,11 +38,7 @@ public class OpenService extends Service<List<TableRowAdapter>> {
 				Reader reader = new FileReader(absolutePath);
 				List<JsonRowAdapter> jsonRowAdapterList = gson.fromJson(reader, type);
 				reader.close();
-				List<TableRowAdapter> tableRowAdapterList = new ArrayList<>();
-				for (JsonRowAdapter jsonRowAdapter : jsonRowAdapterList) {
-					tableRowAdapterList.add(new TableRowAdapter(jsonRowAdapter));
-				}
-				return tableRowAdapterList;
+				return jsonRowAdapterList.stream().map(TableRowAdapter::new).collect(Collectors.toList());
 			}
 		};
 

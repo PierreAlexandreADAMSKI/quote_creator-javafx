@@ -1,11 +1,9 @@
 package app.main.adapters;
 
-import app.main.adapters.Polygon;
-import com.sun.javafx.binding.StringFormatter;
-
 /**
  * app.view.main.widgets.form_box.quantities.polygones Created by Pierre-Alexandre Adamski on 16/04/2016.
  */
+
 public class Rectangle implements Polygon {
 	private Float width;
 	private Float height;

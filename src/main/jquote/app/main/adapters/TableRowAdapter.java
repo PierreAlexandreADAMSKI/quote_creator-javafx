@@ -32,7 +32,7 @@ public class TableRowAdapter {
 		setUnit(unit);
 		setTva(tva);
 		setPriceWrite(priceWrite);
-		setPriceGen(priceWrite, tva);
+		setPriceGen(getTvaPriceWrite());
 		setSel(false);
 		setQuantity(0f);
 	}
@@ -54,9 +54,6 @@ public class TableRowAdapter {
 		nameProperty().set(name);
 	}
 
-	public void setPriceGen(Float priceWrite, Float tva) {
-		priceGenProperty().set(priceWrite + (priceWrite * tva / 100f));
-	}
 	public void setPriceGen(Float priceGen) {
 		priceGenProperty().set(priceGen);
 	}
@@ -99,6 +96,10 @@ public class TableRowAdapter {
 
 	public Float getPriceGen() {
 		return priceGenProperty().get();
+	}
+
+	public Float getTvaPriceWrite() {
+		return ( (getTva() * getPriceWrite()) / 100f )  + getPriceWrite();
 	}
 
 	public Float getPriceWrite() {

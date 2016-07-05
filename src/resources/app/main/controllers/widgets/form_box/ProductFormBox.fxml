@@ -32,19 +32,19 @@
         </HBox>
         <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="36.0" prefWidth="400.0">
             <children>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Taille : "/>
-                <FloatTextField id="size" fx:id="sizeTextField" promptText="empty"/>
-            </children>
-        </HBox>
-        <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="36.0" prefWidth="400.0">
-            <children>
                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Unité : "/>
                 <MenuButton id="size" fx:id="unitMenuButton" prefWidth="75.0" text="..."/>
             </children>
         </HBox>
+        <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="36.0" prefWidth="400.0">
+            <children>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Taille d'une unité : "/>
+                <FloatTextField id="size" fx:id="sizeTextField" promptText="empty"/>
+            </children>
+        </HBox>
         <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="62.0" prefWidth="400.0">
             <children>
-                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Prix HT en € : "/>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Prix unitaire HT en € : "/>
                 <FloatTextField id="priceWrite" fx:id="priceWriteTextField" promptText="empty"/>
             </children>
         </HBox>

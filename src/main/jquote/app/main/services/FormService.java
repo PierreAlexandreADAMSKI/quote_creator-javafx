@@ -26,18 +26,24 @@ public interface FormService {
 
 	static boolean recursiveCheck(ObservableList<Node> children) {
 		for (Node child : children) {
-			if (child instanceof HBox && !recursiveCheck(((Parent) child).getChildrenUnmodifiable())) return false;
+			if (child instanceof HBox && !recursiveCheck(((Parent) child).getChildrenUnmodifiable()))
+				return false;
 			if (child instanceof TextField) {
 				String text = ((TextField) child).getText();
-				if(text == null) return false;
-				if (text.isEmpty() || text.equals("")) return false;
-				if (child instanceof FloatTextField && Float.valueOf(text) == 0f) return false;
+				if(text == null)
+					return false;
+				if (text.isEmpty() || text.equals(""))
+					return false;
+				if (child instanceof FloatTextField && Float.valueOf(text) == 0f)
+					return false;
 			}
 			if (child instanceof MenuButton) {
 				String text = ((MenuButton) child).getText();
-				if(text.isEmpty() || text.equals("...")) return false;
+				if(text.isEmpty() || text.equals("..."))
+					return false;
 			}
-			if (child instanceof ListView && ((ListView) child).getItems().isEmpty()) return false;
+			if (child instanceof ListView && ((ListView) child).getItems().isEmpty())
+				return false;
 		}
 		return true;
 	}

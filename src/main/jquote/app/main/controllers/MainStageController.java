@@ -2,7 +2,6 @@ package app.main.controllers;
 
 import app.main.concurency.OpenService;
 import app.main.concurency.SaveService;
-import app.main.controllers.widgets.dialog.AlertDialog;
 import app.main.controllers.widgets.form_box.MeterSquareQuantityFormBoxController;
 import app.main.controllers.widgets.form_box.ProductFormBoxController;
 import app.main.controllers.widgets.table_box.TableViewBoxController;
@@ -10,7 +9,6 @@ import app.main.javafx.impl.RootController;
 import app.main.adapters.TableRowAdapter;
 import app.main.javafx.QuantityTableCell;
 import app.main.services.AppUtil;
-import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.scene.control.*;
@@ -21,8 +19,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.util.Duration;
-import org.controlsfx.control.PopOver;
 
 import java.io.File;
 import java.util.List;
@@ -43,7 +39,7 @@ public final class MainStageController extends RootController {
 	public Button saveButton;
 	public Button openButton;
 
-	private MenuItem row = new MenuItem("ligne");
+	private MenuItem rowMenuItem = new MenuItem("ligne");
 	/**
 	 * Current <=> JustAdded
 	 */
@@ -94,17 +90,17 @@ public final class MainStageController extends RootController {
 		tableViewBoxController = new TableViewBoxController(this);
 		tableScrollPane.setContent(tableViewBoxController);
 
-		addButton.setDisable(false);
+		addButton.setDisable(true);
 
-		delButton.disableProperty().bind(Bindings.size(tableViewBoxController.tableView.getItems()).lessThan(0));
+		delButton.disableProperty().bind(tableViewBoxController.tableView.getSelectionModel().selectedIndexProperty().isEqualTo(-1));
 
-		row.setOnAction(event -> {
+		rowMenuItem.setOnAction(event -> {
 			formScrollPane.setContent(null);
 			formScrollPane.setContent(new ProductFormBoxController(this));
 		});
-		newMenu.getItems().setAll(row);
+		newMenu.getItems().setAll(rowMenuItem);
 
-		rootPane.setOnKeyReleased(event -> shortCuts(event, this));
+		tableScrollPane.setOnKeyReleased(event -> shortCuts(event, this));
 	}
 
 
@@ -116,11 +112,16 @@ public final class MainStageController extends RootController {
 
 	@FXML
 	public void onAddButtonAction() {
-		addButton.disableProperty().unbind();
+		//unbind if needed then disable add button
+		if (addButton.disableProperty().isBound()) {
+			addButton.disableProperty().unbind();
+		}
+		addButton.setDisable(true);
 
+		//action following the type of form
 		if (formScrollPane.getContent() instanceof ProductFormBoxController) {
 			tableViewBoxController.tableView.getItems().add(currentTableRowAdapter);
-			currentTableRowAdapter.setPriceGen(currentTableRowAdapter.getPriceWrite(), currentTableRowAdapter.getTva());
+			currentTableRowAdapter.setPriceGen(currentTableRowAdapter.getTvaPriceWrite() * currentTableRowAdapter.getQuantity());
 		} else if (formScrollPane.getContent() instanceof MeterSquareQuantityFormBoxController) {
 			//TODO : create objectProperty :: currentTableRowAdapter.setAreaListCellAdapter()
 		}
@@ -131,19 +132,18 @@ public final class MainStageController extends RootController {
 
 	@FXML
 	public void onDelButtonAction() {
+		if (addButton.disableProperty().isBound()) {
+			addButton.disableProperty().unbind();
+		}
 		if (tableScrollPane.getContent() instanceof TableViewBoxController) {
-			if (!tableViewBoxController.tableView.getItems().isEmpty() && tableViewBoxController.tableView.getItems().size() > 0) {
-				final int index = tableViewBoxController.tableView.getSelectionModel().getSelectedIndex();
-				if (!tableViewBoxController.tableView.getItems().isEmpty())
-					tableViewBoxController.tableView.getItems().remove(index);
-
-				if (clickedRowIndex == tableViewBoxController.tableView.getSelectionModel().getSelectedIndex() + 1 //chelou le +1 mais bon
-						&& formScrollPane.getContent() != null) {
-					formScrollPane.setContent(null);
-				}
+			final int index = tableViewBoxController.tableView.getSelectionModel().getSelectedIndex();
+			tableViewBoxController.tableView.getItems().remove(index);
+			if (formScrollPane.getContent() != null) {
+				formScrollPane.setContent(null);
 			}
 		}
 	}
+
 
 	@FXML
 	public void onSaveButtonAction() {
@@ -167,10 +167,10 @@ public final class MainStageController extends RootController {
 				final Point2D position = new Point2D(saveButton.getLayoutX() + saveButton.getWidth(), saveButton.getLayoutY());
 				switch (newValue) {
 					case FAILED:
-						AppUtil.showAlertDialog(rootPane,position,"ERREUR lors de la sauvegarde du fichier :", file.getAbsolutePath());
+						AppUtil.showAlertDialog(rootPane, position, "ERREUR lors de la sauvegarde du fichier :", file.getAbsolutePath());
 						break;
 					case CANCELLED:
-						AppUtil.showAlertDialog(rootPane,position,"ANNULATION de la sauvegarde du fichier :", file.getAbsolutePath());
+						AppUtil.showAlertDialog(rootPane, position, "ANNULATION de la sauvegarde du fichier :", file.getAbsolutePath());
 						break;
 					case READY:
 						break;
@@ -207,19 +207,20 @@ public final class MainStageController extends RootController {
 				final Point2D position = new Point2D(openButton.getLayoutX() + openButton.getWidth(), openButton.getLayoutY());
 				switch (newValue) {
 					case FAILED:
-						AppUtil.showAlertDialog(rootPane,position,"ERREUR lors de l'ouverture du fichier :", file.getAbsolutePath());
+						AppUtil.showAlertDialog(rootPane, position, "ERREUR lors de l'ouverture du fichier :", file.getAbsolutePath());
 						break;
 					case CANCELLED:
-						AppUtil.showAlertDialog(rootPane,position,"ANNULATION de l'ouverture du fichier :", file.getAbsolutePath());
-						break;
+						AppUtil.showAlertDialog(rootPane, position, "ANNULATION de l'ouverture du fichier :", file.getAbsolutePath());
 					case READY:
-						break;
 					case SCHEDULED:
-						break;
 					case RUNNING:
 						break;
 					case SUCCEEDED:
-						tableViewBoxController.tableView.getItems().setAll(openService.getValue());
+						tableViewBoxController.tableView.getItems().clear();
+						openService.getValue().forEach(item -> {
+							setCurrentTableRowAdapter(item);
+							tableViewBoxController.tableView.getItems().add(item);
+						});
 						break;
 				}
 			});

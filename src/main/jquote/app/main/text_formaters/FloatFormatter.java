@@ -10,10 +10,11 @@ import java.util.function.UnaryOperator;
 public class FloatFormatter extends TextFormatter {
 
 	private static final UnaryOperator<Change> filter = change -> {
-		String text = change.getText();
-		if (text.matches("[0-9]*[.]?[0-9]*")) {
+		final String text = change.getText();
+		if (text.matches("[0-9]*[.]?[0-9]*$")) {
 			return change;
 		}
+		change.setText("");
 		return null;
 	};
 

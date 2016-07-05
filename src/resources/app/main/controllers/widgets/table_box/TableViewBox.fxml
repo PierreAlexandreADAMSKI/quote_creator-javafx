@@ -9,9 +9,9 @@
                 <TableColumn fx:id="selCol" minWidth="30.0" prefWidth="30.0" resizable="false" sortable="false" text="" />
                 <TableColumn fx:id="productCol" maxWidth="113.0" minWidth="113.0" prefWidth="113" sortable="false" text="Produit" />
                 <TableColumn fx:id="sellerCol" maxWidth="113.0" minWidth="113.0" prefWidth="113" sortable="false" text="Revendeur" />
-                <TableColumn fx:id="sizeCol" maxWidth="113.0" minWidth="113.0" prefWidth="113" sortable="false" text="Taille" />
                 <TableColumn fx:id="unitCol" maxWidth="113.0" minWidth="113.0" prefWidth="113" sortable="false" text="Unité" />
-                <TableColumn fx:id="priceHTCol" maxWidth="113.0" minWidth="113.0" prefWidth="113" sortable="false" text="Prix HT" />
+                <TableColumn fx:id="sizeCol" maxWidth="113.0" minWidth="113.0" prefWidth="113" sortable="false" text="Taille U" />
+                <TableColumn fx:id="priceHTCol" maxWidth="113.0" minWidth="113.0" prefWidth="113" sortable="false" text="Prix U HT" />
                 <TableColumn fx:id="quantityCol" maxWidth="113.0" minWidth="113.0" prefWidth="113" sortable="false" text="Quantité" />
                 <TableColumn fx:id="tvaCol" maxWidth="100.0" minWidth="40.0" prefWidth="40.0" sortable="false" text="TVA" />
                 <TableColumn fx:id="priceTTCCol" maxWidth="113.0" minWidth="113.0" prefWidth="113" sortable="false" text="Prix TTC" />

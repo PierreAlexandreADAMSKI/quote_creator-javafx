@@ -1,13 +1,13 @@
 package app.main.controllers.widgets.form_box;
 
 import app.main.adapters.AreaListCellAdapter;
+import app.main.adapters.Polygon;
 import app.main.adapters.TableRowAdapter;
 import app.main.controllers.MainStageController;
 import app.main.controllers.widgets.form_box.polygon_area.*;
-import app.main.javafx.FormBox;
 import app.main.javafx.AreaListCell;
+import app.main.javafx.FormBox;
 import app.main.javafx.impl.PolygonAreaBox;
-import app.main.adapters.Polygon;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -15,9 +15,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 
 /**
- * app.view.main.widgets Created by Pierre-Alexandre Adamski on 14/04/2016.
+ * app.main.controllers.widgets.form_box Created by Pierre-Alexandre Adamski on 01/06/16.
  */
-public class MeterSquareQuantityFormBoxController extends FormBox<MainStageController> {
+public class MeterCubeQuantityFormBoxController extends FormBox<MainStageController> {
 	private Polygon polygon;
 	@FXML
 	public TextField stampTextField;
@@ -54,8 +54,8 @@ public class MeterSquareQuantityFormBoxController extends FormBox<MainStageContr
 	private AreaListCell doubleClickedCell;
 	private int doubleClickedRowIndex;
 
-	public MeterSquareQuantityFormBoxController(MainStageController controller) {
-		super("MeterSquareQuantityFormBox", controller);
+	public MeterCubeQuantityFormBoxController(MainStageController controller) {
+		super("MeterCubeQuantityFormBox", controller);
 		surfaceListView.setCellFactory(factory -> new AreaListCell(/*this*/));
 	}
 
@@ -86,12 +86,9 @@ public class MeterSquareQuantityFormBoxController extends FormBox<MainStageContr
 		if (polygon != null) {
 			String stamp = stampTextField.getText();
 			Float area = polygon.getArea();
-			if (event.getSource() instanceof Button) {
+			if (event.getSource() instanceof Button)
 				if (((Button) event.getSource()).getText().equals("-"))
-				{
 					area = -1.f * area;
-				}
-			}
 			String type = polygon.getType();
 			String formula = polygon.getFormula();
 			surfaceListView.getItems().add(new AreaListCellAdapter(stamp, area, type, formula));
@@ -99,7 +96,7 @@ public class MeterSquareQuantityFormBoxController extends FormBox<MainStageContr
 			clickedTableRowAdapter.setQuantity(
 					clickedTableRowAdapter.getQuantity() + area);
 			clickedTableRowAdapter.setPriceGen(
-					clickedTableRowAdapter.getTvaPriceWrite() * clickedTableRowAdapter.getQuantity());
+					clickedTableRowAdapter.getPriceGen() * clickedTableRowAdapter.getQuantity());
 
 		}
 	}
@@ -109,17 +106,12 @@ public class MeterSquareQuantityFormBoxController extends FormBox<MainStageContr
 		if (!surfaceListView.getItems().isEmpty() && surfaceListView.getItems().size() > 0) {
 			final int index = surfaceListView.getSelectionModel().getSelectedIndex();
 			final AreaListCellAdapter cell = surfaceListView.getItems().get(index);
-			final TableRowAdapter clickedRow = this.getController().getClickedTableRowAdapter();
-			if (cell.getArea() == null){
-				return;
-			}
-			if (cell.getArea() > 0.f) {
-				clickedRow.setQuantity(clickedRow.getQuantity() - cell.getArea());
-			} else {
-				clickedRow.setQuantity(clickedRow.getQuantity() - cell.getArea());
-			}
-			clickedRow.setPriceGen(clickedRow.getTvaPriceWrite() * clickedRow.getQuantity());
-			surfaceListView.getItems().remove(index);
+			if (cell.getArea() < 0.f)
+				this.getController().getClickedTableRowAdapter().setQuantity(
+						this.getController().getClickedTableRowAdapter().getQuantity() - cell.getArea());
+			else
+				this.getController().getClickedTableRowAdapter().setQuantity(
+						this.getController().getClickedTableRowAdapter().getQuantity() - cell.getArea());
 		}
 	}
 
@@ -131,7 +123,7 @@ public class MeterSquareQuantityFormBoxController extends FormBox<MainStageContr
 		currentAdapter = new AreaListCellAdapter();
 
 		/** so it's more clear **/
-		final MeterSquareQuantityFormBoxController INSTANCE = this;
+		final MeterCubeQuantityFormBoxController INSTANCE = this;
 
 		addSurfaceButton.setOnMouseClicked(this::addArea);
 		subSurfaceButton.setOnMouseClicked(this::addArea);
@@ -139,17 +131,11 @@ public class MeterSquareQuantityFormBoxController extends FormBox<MainStageContr
 
 		/** Bindings **/
 		controller.addButton.disableProperty().unbind();
-		controller.addButton.disableProperty().bind(Bindings.or(
-				menuButton.textProperty().isEqualTo("..."), Bindings.or(
-						Bindings.size(surfaceListView.getItems()).lessThan(1),
-						stampTextField.lengthProperty().lessThan(1)
-				)
-		));
+		controller.addButton.disableProperty().bind(Bindings.size(surfaceListView.getItems()).lessThan(0));
 		surfaceListView.disableProperty().bind(Bindings.equal("...", menuButton.textProperty()));
-		delSurfaceButton.disableProperty().bind(surfaceListView.getSelectionModel().selectedIndexProperty().isEqualTo(-1));
 
 		/** Listeners **/
-
+/*
 		triangleItem.setOnAction(event -> {
 			polygonBox = null;
 			polygonBox = new TriangleAreaFormBoxController(INSTANCE);
@@ -161,7 +147,6 @@ public class MeterSquareQuantityFormBoxController extends FormBox<MainStageContr
 			polygonBox = new RectangleAreaFormBoxController(INSTANCE);
 			updateHBox();
 			menuButton.setText(rectangleItem.getText());
-
 		});
 		trapezeItem.setOnAction(event -> {
 			polygonBox = null;
@@ -181,13 +166,11 @@ public class MeterSquareQuantityFormBoxController extends FormBox<MainStageContr
 			updateHBox();
 			menuButton.setText(arcItem.getText());
 		});
+*/
 	}
-
 	private void updateHBox() {
 		if (!hBox.getChildren().isEmpty())
 			hBox.getChildren().clear();
 		hBox.getChildren().add(polygonBox);
 	}
 }
-
-

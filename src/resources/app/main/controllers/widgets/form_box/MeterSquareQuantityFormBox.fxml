@@ -8,7 +8,10 @@
 <?import app.main.javafx.impl.Box?>
 <?import app.main.javafx.FloatTextField?>
 
-<fx:root type="app.main.controllers.widgets.form_box.MeterSquareQuantityFormBoxController" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1"
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<fx:root type="app.main.controllers.widgets.form_box.MeterSquareQuantityFormBoxController"
+         xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1"
          prefHeight="300.0" prefWidth="400.0" spacing="10.0">
     <children>
         <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" prefWidth="400.0">
@@ -24,11 +27,137 @@
                 <MenuButton fx:id="menuButton" mnemonicParsing="false" prefWidth="163.0" text="..."
                             textAlignment="RIGHT">
                     <items>
-                        <MenuItem id="triangle" fx:id="triangleItem" mnemonicParsing="false" text="Triangle △"/>
-                        <MenuItem id="rectangle" fx:id="rectangleItem" mnemonicParsing="false" text="Rectangle ⃞"/>
-                        <MenuItem id="trapeze" fx:id="trapezeItem" mnemonicParsing="false" text="Trapèze ⏢"/>
-                        <MenuItem id="circle" fx:id="circleItem" mnemonicParsing="false" text="Cercle   ⃝"/>
-                        <MenuItem id="arc" fx:id="arcItem" mnemonicParsing="false" text="Arc ⌒"/>
+                        <!-- Icon made by [author link] from www.flaticon.com | E.g.: Icon made by Freepik from www.flaticon.com  -->
+                        <MenuItem id="triangle" fx:id="triangleItem" mnemonicParsing="fals">
+                            <graphic>
+                                <GridPane>
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="0.0" prefWidth="50.0"/>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="0.0" prefWidth="50.0"/>
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="7.0" prefHeight="7.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints minHeight="7.0" prefHeight="7.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints minHeight="7.0" prefHeight="7.0" vgrow="SOMETIMES"/>
+                                    </rowConstraints>
+                                    <children>
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Triangle"
+                                              GridPane.halignment="LEFT" GridPane.valignment="CENTER"/>
+                                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true"
+                                                   preserveRatio="true" GridPane.columnIndex="1"
+                                                   GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+                                            <image>
+                                                <Image url="@triangle.png"/>
+                                            </image>
+                                        </ImageView>
+                                    </children>
+                                </GridPane>
+                            </graphic>
+                        </MenuItem>
+                        <MenuItem id="rectangle" fx:id="rectangleItem" mnemonicParsing="false">
+                            <graphic>
+                                <GridPane>
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="0.0" prefWidth="50.0"/>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="0.0" prefWidth="50.0"/>
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="7.0" prefHeight="7.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints minHeight="7.0" prefHeight="7.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints minHeight="7.0" prefHeight="7.0" vgrow="SOMETIMES"/>
+                                    </rowConstraints>
+                                    <children>
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Rectangle"
+                                              GridPane.halignment="LEFT" GridPane.valignment="CENTER"/>
+                                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true"
+                                                   preserveRatio="true" GridPane.columnIndex="1"
+                                                   GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+                                            <image>
+                                                <Image url="@square.png"/>
+                                            </image>
+                                        </ImageView>
+                                    </children>
+                                </GridPane>
+                            </graphic>
+                        </MenuItem>
+                        <MenuItem id="trapeze" fx:id="trapezeItem" mnemonicParsing="false">
+                            <graphic>
+                                <GridPane>
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="0.0" prefWidth="50.0"/>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="0.0" prefWidth="50.0"/>
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="7.0" prefHeight="7.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints minHeight="7.0" prefHeight="7.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints minHeight="7.0" prefHeight="7.0" vgrow="SOMETIMES"/>
+                                    </rowConstraints>
+                                    <children>
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Trapèze"
+                                              GridPane.halignment="LEFT" GridPane.valignment="CENTER"/>
+                                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true"
+                                                   preserveRatio="true" GridPane.columnIndex="1"
+                                                   GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+                                            <image>
+                                                <Image url="@trapeze.png"/>
+                                            </image>
+                                        </ImageView>
+                                    </children>
+                                </GridPane>
+                            </graphic>
+                        </MenuItem>
+                        <MenuItem id="circle" fx:id="circleItem" mnemonicParsing="false">
+                            <graphic>
+                                <GridPane>
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="0.0" prefWidth="50.0"/>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="0.0" prefWidth="50.0"/>
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="7.0" prefHeight="7.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints minHeight="7.0" prefHeight="7.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints minHeight="7.0" prefHeight="7.0" vgrow="SOMETIMES"/>
+                                    </rowConstraints>
+                                    <children>
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Cercle"
+                                              GridPane.halignment="LEFT" GridPane.valignment="CENTER"/>
+                                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true"
+                                                   preserveRatio="true" GridPane.columnIndex="1"
+                                                   GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+                                            <image>
+                                                <Image url="@circle.png"/>
+                                            </image>
+                                        </ImageView>
+                                    </children>
+                                </GridPane>
+                            </graphic>
+                        </MenuItem>
+                        <MenuItem id="arc" fx:id="arcItem" mnemonicParsing="false">
+                            <graphic>
+                                <GridPane>
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="0.0" prefWidth="50.0"/>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="0.0" prefWidth="50.0"/>
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="7.0" prefHeight="7.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints minHeight="7.0" prefHeight="7.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints minHeight="7.0" prefHeight="7.0" vgrow="SOMETIMES"/>
+                                    </rowConstraints>
+                                    <children>
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Arc"
+                                              GridPane.halignment="LEFT" GridPane.valignment="CENTER"/>
+                                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true"
+                                                   preserveRatio="true" GridPane.columnIndex="1"
+                                                   GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+                                            <image>
+                                                <Image url="@arc.png"/>
+                                            </image>
+                                        </ImageView>
+                                    </children>
+                                </GridPane>
+                            </graphic>
+                        </MenuItem>
                     </items>
                 </MenuButton>
             </children>
