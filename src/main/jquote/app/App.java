@@ -1,5 +1,6 @@
 package app;
 
+import de.codecentric.centerdevice.javafxsvg.SvgImageLoaderFactory;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -13,6 +14,7 @@ import static app.main.services.ReflectionService.getViewsFromApp;
  */
 public class App extends Application{
 	public static void main(String[] args) throws Exception {
+		SvgImageLoaderFactory.install();
 		launch(args); // for javaFx
 	}
 

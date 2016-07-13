@@ -40,9 +40,11 @@ public interface AppUtil {
 		}
 	}
 
-
-	static void showStandAlone(URL url, StageStyle stageStyle) throws IOException {
+	static void showStandAlone(Object root, String fxmlName, StageStyle stageStyle) throws IOException {
+		final URL url = getResourceFromObject(fxmlName, root);
 		final FXMLLoader loader = new FXMLLoader(url);
+		loader.setRoot(root);
+		loader.setController(root);
 		final Scene scene = new Scene(loader.load());
 		StageService.addStandAloneStage(new Stage(stageStyle), url.getFile());
 		StageService.getStandAloneStage(url.getFile()).setScene(scene);
@@ -67,7 +69,6 @@ public interface AppUtil {
 		popup.setContentNode(alertDialog);
 		popup.show(rootPane, point.getX(), point.getY());
 	}
-
 
 	//ADDME if comes up to be necessary
 	static void storeProperties(String key, Properties properties) {

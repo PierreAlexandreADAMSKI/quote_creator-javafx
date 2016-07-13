@@ -39,7 +39,7 @@ public class TriangleAreaFormBoxController extends FormBox<MeterSquareQuantityFo
 		heightTextField.textProperty().addListener(changeListener);
 
 
-		//TODO bind FIXME bind
+		//FIXME bind
 		heightTextField.setOnKeyReleased(event -> {
 			if (!heightTextField.getText().equals("") && heightTextField != null){
 				polygon.setHeight(Float.valueOf(heightTextField.getText()));

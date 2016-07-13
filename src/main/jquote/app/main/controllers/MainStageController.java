@@ -9,6 +9,7 @@ import app.main.javafx.impl.RootController;
 import app.main.adapters.TableRowAdapter;
 import app.main.javafx.QuantityTableCell;
 import app.main.services.AppUtil;
+import app.templates.TemplatesViewer;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.scene.control.*;
@@ -21,6 +22,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import static app.main.services.KeyEventService.shortCuts;
@@ -39,7 +41,11 @@ public final class MainStageController extends RootController {
 	public Button saveButton;
 	public Button openButton;
 
-	private MenuItem rowMenuItem = new MenuItem("ligne");
+	private MenuItem rowMenuItem = new MenuItem("nouveau produit");
+	private MenuItem templateMenuItem = new MenuItem("modèles");
+
+	private TemplatesViewer templatesViewer;
+	private File template;
 	/**
 	 * Current <=> JustAdded
 	 */
@@ -98,15 +104,38 @@ public final class MainStageController extends RootController {
 			formScrollPane.setContent(null);
 			formScrollPane.setContent(new ProductFormBoxController(this));
 		});
-		newMenu.getItems().setAll(rowMenuItem);
+
+		templateMenuItem.setOnAction(event1 -> {
+					final FileChooser fileChooser = new FileChooser();
+
+					//set title and initial directory
+					fileChooser.setTitle("ouvrir");
+					fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+
+					//Set extension filter
+					FileChooser.ExtensionFilter extensionFilter1 = new FileChooser.ExtensionFilter("Fichier SVG (*.svg)", "*.svg");
+					FileChooser.ExtensionFilter extensionFilter2 = new FileChooser.ExtensionFilter("Fichier PDF (*.pdf)", "*.pdf");
+					fileChooser.getExtensionFilters().addAll(extensionFilter1, extensionFilter2);
+
+					//Show save file dialog
+					template = fileChooser.showOpenDialog(new Stage(StageStyle.DECORATED));
+
+					if (template != null) {
+						try {
+							templatesViewer = new TemplatesViewer(template);
+						} catch (IOException e) {
+							template = null;
+							e.printStackTrace();
+						}
+					}
+				});
+		newMenu.getItems().setAll(rowMenuItem, templateMenuItem);
 
 		tableScrollPane.setOnKeyReleased(event -> shortCuts(event, this));
 	}
 
 
 	/**
-	 * FIXME :: unités : U->unité, m3->mètre cube, ens->ensemble
-	 * <p>
 	 * UPGRADEME :: pouvoir calculer des surfaces sur polygone N cotés (N est choisi par l'utilisateur avec ou non la formule) à voir.
 	 */
 
