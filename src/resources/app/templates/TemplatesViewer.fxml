@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
 
@@ -19,26 +17,13 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
             </rowConstraints>
             <children>
-                <TabPane prefHeight="800.0" prefWidth="270.0" tabClosingPolicy="UNAVAILABLE">
+                <TabPane prefHeight="800.0" prefWidth="270.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="0">
                     <tabs>
-                        <Tab text="Untitled Tab 1"/>
-                        <Tab text="Untitled Tab 2"/>
+                        <Tab fx:id="tab1" text="mise en page"/>
+                        <Tab fx:id="tab2" text="imprimer"/>
                     </tabs>
                 </TabPane>
-                <ScrollPane prefHeight="800.0" prefWidth="530.0" GridPane.columnIndex="1">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="900.0">
-                            <children>
-                                <HBox fx:id="imageViewBox" alignment="CENTER" prefHeight="800.0" prefWidth="900.0">
-                                    <children>
-                                        <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0"
-                                                   pickOnBounds="true" preserveRatio="true"/>
-                                    </children>
-                                </HBox>
-                            </children>
-                        </AnchorPane>
-                    </content>
-                </ScrollPane>
+                <HBox fx:id="webBox" prefHeight="800.0" prefWidth="1010.0" GridPane.columnIndex="1"/>
             </children>
         </GridPane>
     </children>

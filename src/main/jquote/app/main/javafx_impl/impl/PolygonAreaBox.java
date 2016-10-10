@@ -1,4 +1,4 @@
-package app.main.javafx.impl;
+package app.main.javafx_impl.impl;
 
 import app.main.adapters.Polygon;
 

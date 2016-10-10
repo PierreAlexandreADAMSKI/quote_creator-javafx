@@ -1,16 +1,11 @@
-package app.main.javafx;
+package app.main.javafx_impl;
 
 import app.main.adapters.*;
-import app.main.controllers.widgets.form_box.MeterSquareQuantityFormBoxController;
 import app.main.controllers.widgets.list_cell.AreaListCellController;
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Paint;
 
 /**
- * app.main.javafx Created by Pierre-Alexandre Adamski on 22/05/16.
+ * app.javafx Created by Pierre-Alexandre Adamski on 22/05/16.
  */
 public class AreaListCell extends ListCell<AreaListCellAdapter> {
 

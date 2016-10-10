@@ -1,6 +1,6 @@
 package app.main.services;
 
-import app.main.javafx.FormBox;
+import app.main.javafx_impl.FormBox;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.value.ChangeListener;

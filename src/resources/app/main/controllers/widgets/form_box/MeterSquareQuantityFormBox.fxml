@@ -4,9 +4,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
-<?import app.main.javafx.FormBox?>
-<?import app.main.javafx.impl.Box?>
-<?import app.main.javafx.FloatTextField?>
+<?import app.main.javafx_impl.FormBox?>
+<?import app.main.javafx_impl.impl.Box?>
+<?import app.main.javafx_impl.FloatTextField?>
 
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>

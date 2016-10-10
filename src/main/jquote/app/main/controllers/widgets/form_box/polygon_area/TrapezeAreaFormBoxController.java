@@ -1,10 +1,10 @@
 package app.main.controllers.widgets.form_box.polygon_area;
 
 import app.main.controllers.widgets.form_box.MeterSquareQuantityFormBoxController;
-import app.main.javafx.FloatTextField;
-import app.main.javafx.FormBox;
+import app.main.javafx_impl.FloatTextField;
+import app.main.javafx_impl.FormBox;
 import app.main.adapters.Polygon;
-import app.main.javafx.impl.PolygonAreaBox;
+import app.main.javafx_impl.impl.PolygonAreaBox;
 import app.main.services.ForButtonListener;
 import javafx.fxml.FXML;
 import app.main.adapters.Trapeze;

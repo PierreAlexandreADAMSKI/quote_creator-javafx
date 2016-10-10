@@ -1,11 +1,11 @@
-package app.main.javafx;
+package app.main.javafx_impl;
 
-import app.main.javafx.impl.Controller;
-import app.main.javafx.impl.ParentBox;
+import app.main.javafx_impl.impl.Controller;
+import app.main.javafx_impl.impl.ParentBox;
 import javafx.scene.control.Button;
 
 /**
- * app.main.javafx Created by Pierre-Alexandre Adamski on 21/05/16.
+ * app.javafx Created by Pierre-Alexandre Adamski on 21/05/16.
  */
 public class FormBox<T extends Controller> extends ParentBox<T> {
 

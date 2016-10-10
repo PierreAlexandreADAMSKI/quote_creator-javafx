@@ -2,21 +2,17 @@ package app.main.controllers.widgets.form_box;
 
 import app.main.adapters.TableRowAdapter;
 import app.main.controllers.MainStageController;
-import app.main.javafx.FloatTextField;
-import app.main.javafx.FormBox;
+import app.main.javafx_impl.FloatTextField;
+import app.main.javafx_impl.FormBox;
 import app.main.services.FormService;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
-import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.util.converter.NumberStringConverter;
-
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 
 /**
  * app.view.main.widgets Created by Pierre-Alexandre Adamski on 04/04/2016.

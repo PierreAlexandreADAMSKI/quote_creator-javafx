@@ -1,6 +1,6 @@
 package app.main.controllers.widgets.dialog;
 
-		import app.main.javafx.impl.Dialog;
+		import app.main.javafx_impl.impl.Dialog;
 		import javafx.fxml.FXML;
 		import javafx.scene.control.Button;
 		import javafx.scene.control.Label;

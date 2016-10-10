@@ -3,7 +3,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
-<?import app.main.javafx.FloatTextField?>
+<?import app.main.javafx_impl.FloatTextField?>
 <fx:root spacing="10.0" type="app.main.controllers.widgets.form_box.polygon_area.CircleAreaFormBoxController" xmlns="http://javafx.com/javafx/8.0.60"
          xmlns:fx="http://javafx.com/fxml/1">
     <children>

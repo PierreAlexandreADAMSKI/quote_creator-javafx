@@ -1,7 +1,6 @@
 package app.main.services;
 
 import app.App;
-import app.main.javafx.impl.Box;
 
 import java.net.URL;
 

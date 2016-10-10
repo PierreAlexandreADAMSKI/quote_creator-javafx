@@ -5,11 +5,14 @@ import app.main.concurency.SaveService;
 import app.main.controllers.widgets.form_box.MeterSquareQuantityFormBoxController;
 import app.main.controllers.widgets.form_box.ProductFormBoxController;
 import app.main.controllers.widgets.table_box.TableViewBoxController;
-import app.main.javafx.impl.RootController;
+import app.main.javafx_impl.impl.RootController;
 import app.main.adapters.TableRowAdapter;
-import app.main.javafx.QuantityTableCell;
+import app.main.javafx_impl.QuantityTableCell;
 import app.main.services.AppUtil;
 import app.templates.TemplatesViewer;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.scene.control.*;
@@ -23,7 +26,15 @@ import javafx.stage.StageStyle;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static app.main.services.KeyEventService.shortCuts;
 
@@ -44,8 +55,8 @@ public final class MainStageController extends RootController {
 	private MenuItem rowMenuItem = new MenuItem("nouveau produit");
 	private MenuItem templateMenuItem = new MenuItem("modèles");
 
-	private TemplatesViewer templatesViewer;
-	private File template;
+	//private TemplatesViewer templatesViewer;
+	private String template;
 	/**
 	 * Current <=> JustAdded
 	 */
@@ -57,6 +68,11 @@ public final class MainStageController extends RootController {
 	private TableRowAdapter clickedTableRowAdapter;
 	private QuantityTableCell clickedCell;
 	private int clickedRowIndex;
+
+	/**
+	 * ObesrvableLists
+	 */
+	private ObservableList<TableRowAdapter> tableRows = FXCollections.observableArrayList();
 
 	public TableRowAdapter getCurrentTableRowAdapter() {
 		return currentTableRowAdapter;
@@ -100,48 +116,67 @@ public final class MainStageController extends RootController {
 
 		delButton.disableProperty().bind(tableViewBoxController.tableView.getSelectionModel().selectedIndexProperty().isEqualTo(-1));
 
-		rowMenuItem.setOnAction(event -> {
-			formScrollPane.setContent(null);
-			formScrollPane.setContent(new ProductFormBoxController(this));
-		});
+		rowMenuItem.setOnAction(this::rowMenuItemAction);
+		templateMenuItem.setOnAction(this::templateMenuItemAction);
 
-		templateMenuItem.setOnAction(event1 -> {
-					final FileChooser fileChooser = new FileChooser();
-
-					//set title and initial directory
-					fileChooser.setTitle("ouvrir");
-					fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-
-					//Set extension filter
-					FileChooser.ExtensionFilter extensionFilter1 = new FileChooser.ExtensionFilter("Fichier SVG (*.svg)", "*.svg");
-					FileChooser.ExtensionFilter extensionFilter2 = new FileChooser.ExtensionFilter("Fichier PDF (*.pdf)", "*.pdf");
-					fileChooser.getExtensionFilters().addAll(extensionFilter1, extensionFilter2);
-
-					//Show save file dialog
-					template = fileChooser.showOpenDialog(new Stage(StageStyle.DECORATED));
-
-					if (template != null) {
-						try {
-							templatesViewer = new TemplatesViewer(template);
-						} catch (IOException e) {
-							template = null;
-							e.printStackTrace();
-						}
-					}
-				});
 		newMenu.getItems().setAll(rowMenuItem, templateMenuItem);
 
 		tableScrollPane.setOnKeyReleased(event -> shortCuts(event, this));
 	}
 
+	private void rowMenuItemAction(ActionEvent event) {
+		formScrollPane.setContent(null);
+		formScrollPane.setContent(new ProductFormBoxController(this));
+	}
+
+	private void templateMenuItemAction(ActionEvent event1) {
+		// TODO : TRY THIS
+		/*
+		URI templatesDirUrl;
+		File file = null;
+		try {
+			templatesDirUrl = TemplatesViewer.class.getResource("").toURI();
+			file = new File(templatesDirUrl);
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+		File[] peers;
+		assert file != null;
+		peers = file.listFiles();
+		assert peers != null;
+		List<File> peersList;
+		peersList = Arrays.asList(peers).stream().filter(
+				peer -> peer.getName().substring(peer.getName().lastIndexOf(".") + 1).equals("svg"))
+				.collect(Collectors.toList());
+		if (peersList.size() > 0) {
+			try {
+				new TemplatesViewer(peersList);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		*/
+
+		template = TemplatesViewer.class.getResource("testsvgpdf.svg").toExternalForm();
+		System.out.println("template " + template);
+		if (template != null) {
+			try {
+				new TemplatesViewer(template);
+			} catch (IOException e) {
+				template = null;
+				e.printStackTrace();
+			}
+		}
+
+	}
 
 	/**
-	 * UPGRADEME :: pouvoir calculer des surfaces sur polygone N cotés (N est choisi par l'utilisateur avec ou non la formule) à voir.
+	 * UPGRADEME :: pouvoir calculer des surfaces sur polygone N cotés (N est choisi par l'utilisateur avec ou nom la formule) à voir.
 	 */
 
 	@FXML
 	public void onAddButtonAction() {
-		//unbind if needed then disable add button
+		//unbind if needed then disable add printButton
 		if (addButton.disableProperty().isBound()) {
 			addButton.disableProperty().unbind();
 		}
@@ -149,7 +184,8 @@ public final class MainStageController extends RootController {
 
 		//action following the type of form
 		if (formScrollPane.getContent() instanceof ProductFormBoxController) {
-			tableViewBoxController.tableView.getItems().add(currentTableRowAdapter);
+			tableRows.add(currentTableRowAdapter);
+			tableViewBoxController.tableView.getItems().setAll(tableRows);
 			currentTableRowAdapter.setPriceGen(currentTableRowAdapter.getTvaPriceWrite() * currentTableRowAdapter.getQuantity());
 		} else if (formScrollPane.getContent() instanceof MeterSquareQuantityFormBoxController) {
 			//TODO : create objectProperty :: currentTableRowAdapter.setAreaListCellAdapter()
@@ -255,5 +291,6 @@ public final class MainStageController extends RootController {
 			});
 		}
 	}
+
 }
 

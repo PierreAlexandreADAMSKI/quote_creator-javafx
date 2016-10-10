@@ -2,13 +2,13 @@ package app.main.controllers.widgets.table_box;
 
 import app.main.adapters.TableRowAdapter;
 import app.main.controllers.MainStageController;
-import app.main.javafx.impl.ParentBox;
+import app.main.javafx_impl.impl.ParentBox;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
-import app.main.javafx.QuantityTableCell;
+import app.main.javafx_impl.QuantityTableCell;
 
 /**
  * app.view.main.widgets.table_box Created by Pierre-Alexandre Adamski on 14/04/2016.

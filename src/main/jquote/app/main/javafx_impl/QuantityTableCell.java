@@ -1,4 +1,4 @@
-package app.main.javafx;
+package app.main.javafx_impl;
 
 import app.main.adapters.TableRowAdapter;
 import app.main.controllers.widgets.form_box.MeterCubeQuantityFormBoxController;
@@ -29,7 +29,7 @@ public class QuantityTableCell extends TableCell<TableRowAdapter, Float> {
 		controller.setClickedRowIndex(((TableRow) controller.getClickedCell().getParent()).getIndex());
 		controller.setClickedTableRowAdapter(controller.getClickedCell().getTableView().getItems().get(controller.getClickedRowIndex()));
 
-		String unit = controller.getCurrentTableRowAdapter().getUnit();
+		String unit = controller.getClickedTableRowAdapter().getUnit();
 		switch (unit) {
 			case "U":
 			case "m":

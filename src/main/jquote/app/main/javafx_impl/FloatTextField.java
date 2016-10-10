@@ -1,8 +1,6 @@
-package app.main.javafx;
+package app.main.javafx_impl;
 
 import app.main.text_formaters.FloatFormatter;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
 
 /**

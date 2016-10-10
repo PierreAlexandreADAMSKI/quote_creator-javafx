@@ -5,7 +5,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<?import app.main.javafx.FloatTextField?>
+<?import app.main.javafx_impl.FloatTextField?>
 
 <fx:root type="app.main.controllers.widgets.form_box.ProductFormBoxController" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1"
          prefHeight="300.0" prefWidth="400.0" spacing="10.0">

@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
-<?import app.main.javafx.FloatTextField?>
+<?import app.main.javafx_impl.FloatTextField?>
 <fx:root type="app.main.controllers.widgets.form_box.polygon_area.TrapezeAreaFormBoxController" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1"
          prefWidth="400.0" spacing="10.0">
     <children>

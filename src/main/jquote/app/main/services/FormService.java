@@ -1,7 +1,7 @@
 package app.main.services;
 
-import app.main.javafx.FloatTextField;
-import app.main.javafx.FormBox;
+import app.main.javafx_impl.FloatTextField;
+import app.main.javafx_impl.FormBox;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.ObservableList;

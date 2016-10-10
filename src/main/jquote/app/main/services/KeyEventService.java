@@ -3,7 +3,7 @@ package app.main.services;
 
 import app.main.controllers.MainStageController;
 import app.main.controllers.widgets.form_box.ProductFormBoxController;
-import app.main.javafx.impl.Controller;
+import app.main.javafx_impl.impl.Controller;
 import javafx.scene.input.KeyEvent;
 
 /**

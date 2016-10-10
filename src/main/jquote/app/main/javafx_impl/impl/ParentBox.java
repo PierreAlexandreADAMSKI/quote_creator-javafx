@@ -1,4 +1,4 @@
-package app.main.javafx.impl;
+package app.main.javafx_impl.impl;
 
 /**
  * app.main.controllers.widgets.form_box Created by Pierre-Alexandre Adamski on 19/05/16.

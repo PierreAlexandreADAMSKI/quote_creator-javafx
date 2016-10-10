@@ -1,9 +1,8 @@
 package app.main.controllers.widgets.list_cell;
 
-import app.main.javafx.ChildBox;
+import app.main.javafx_impl.ChildBox;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
 
 /**
  * app.main.controllers.widgets.list_cell Created by Pierre-Alexandre Adamski on 24/05/16.
